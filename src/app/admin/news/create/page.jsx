@@ -16,17 +16,24 @@ const initialState = {
   content_bn: "",
   content_en: "",
   slug: "",
+  publishedAt: "",
+  status: "draft",
   category: "",
   tags: "",
+
+  // NEW FLAGS
+  isBreaking: 1,
+  isTrending: 1,
+  isFeatured: 1,
 };
 
 const categories = [
-  "Politics",
-  "Sports",
-  "Technology",
-  "Business",
-  "Entertainment",
-  "International",
+  { en: "Politics", bn: "রাজনীতি" },
+  { en: "Sports", bn: "খেলাধুলা" },
+  { en: "Technology", bn: "প্রযুক্তি" },
+  { en: "Business", bn: "ব্যবসা" },
+  { en: "Entertainment", bn: "বিনোদন" },
+  { en: "International", bn: "আন্তর্জাতিক" },
 ];
 
 export default function CreateNews() {
@@ -77,7 +84,6 @@ export default function CreateNews() {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/news`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -101,81 +107,172 @@ export default function CreateNews() {
         {/* LEFT */}
         <div className="md:col-span-2 space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Input
-                name="title_bn"
-                value={form.title_bn}
-                onChange={handleChange}
-                placeholder="Title (Bangla)"
-                className="rounded-sm shadow-none border"
-              />
-            </div>
+            <Input
+              name="title_bn"
+              value={form.title_bn}
+              onChange={handleChange}
+              placeholder="Title (Bangla)"
+            />
+            <Input
+              name="title_en"
+              value={form.title_en}
+              onChange={handleChange}
+              placeholder="Title (English)"
+            />
 
-            <div>
-              <Input
-                name="title_en"
-                value={form.title_en}
-                onChange={handleChange}
-                placeholder="Title (English)"
-                className="rounded-sm shadow-none border"
-              />
-            </div>
+            <Textarea
+              name="summary_bn"
+              value={form.summary_bn}
+              onChange={handleChange}
+              placeholder="Summary (Bangla)"
+            />
+            <Textarea
+              name="summary_en"
+              value={form.summary_en}
+              onChange={handleChange}
+              placeholder="Summary (English)"
+            />
 
-            <div>
-              <Textarea
-                name="summary_bn"
-                value={form.summary_bn}
-                onChange={handleChange}
-                placeholder="Summary (Bangla)"
-                className="rounded-sm shadow-none border"
-              />
-            </div>
-
-            <div>
-              <Textarea
-                name="summary_en"
-                value={form.summary_en}
-                onChange={handleChange}
-                placeholder="Summary (English)"
-                className="rounded-sm shadow-none border"
-              />
-            </div>
-
-            <div>
-              <Textarea
-                rows={6}
-                name="content_bn"
-                value={form.content_bn}
-                onChange={handleChange}
-                placeholder="Content (Bangla)"
-                className="rounded-sm shadow-none border"
-              />
-            </div>
-
-            <div>
-              <Textarea
-                rows={6}
-                name="content_en"
-                value={form.content_en}
-                onChange={handleChange}
-                placeholder="Content (English)"
-                className="rounded-sm shadow-none border"
-              />
-            </div>
+            <Textarea
+              rows={6}
+              name="content_bn"
+              value={form.content_bn}
+              onChange={handleChange}
+              placeholder="Content (Bangla)"
+            />
+            <Textarea
+              rows={6}
+              name="content_en"
+              value={form.content_en}
+              onChange={handleChange}
+              placeholder="Content (English)"
+            />
           </div>
         </div>
 
         {/* RIGHT */}
         <div className="space-y-4">
-          <div className="border p-4 space-y-3 rounded-sm shadow-none">
+          <div className="border p-4 rounded-sm space-y-4">
+            <h2 className="text-sm font-semibold">News Flags</h2>
+
+            {/* Breaking */}
+            <div className="flex items-center justify-between">
+              <span className="text-sm">Breaking</span>
+              <div className="flex gap-3 text-sm">
+                <label>
+                  <input
+                    type="radio"
+                    name="isBreaking"
+                    checked={form.isBreaking === true}
+                    onChange={() =>
+                      setForm((prev) => ({ ...prev, isBreaking: true }))
+                    }
+                  />
+                  <span className="ml-1">Yes</span>
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="isBreaking"
+                    checked={form.isBreaking === false}
+                    onChange={() =>
+                      setForm((prev) => ({ ...prev, isBreaking: false }))
+                    }
+                  />
+                  <span className="ml-1">No</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Trending */}
+            <div className="flex items-center justify-between">
+              <span className="text-sm">Trending</span>
+              <div className="flex gap-3 text-sm">
+                <label>
+                  <input
+                    type="radio"
+                    name="isTrending"
+                    checked={form.isTrending === true}
+                    onChange={() =>
+                      setForm((prev) => ({ ...prev, isTrending: true }))
+                    }
+                  />
+                  Yes
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="isTrending"
+                    checked={form.isTrending === false}
+                    onChange={() =>
+                      setForm((prev) => ({ ...prev, isTrending: false }))
+                    }
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+
+            {/* Featured */}
+            <div className="flex items-center justify-between">
+              <span className="text-sm">Featured</span>
+              <div className="flex gap-3 text-sm">
+                <label>
+                  <input
+                    type="radio"
+                    checked={form.isBreaking === 0}
+                    onChange={() =>
+                      setForm((prev) => ({ ...prev, isBreaking: 0 }))
+                    }
+                  />
+                  Yes
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    checked={form.isBreaking === 1}
+                    onChange={() =>
+                      setForm((prev) => ({ ...prev, isBreaking: 1 }))
+                    }
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="border p-4 space-y-3 rounded-sm">
+            {/* SLUG */}
             <Input
               name="slug"
               value={form.slug}
               onChange={handleChange}
               placeholder="Slug"
-              className="rounded-sm shadow-none"
             />
 
+            {/* STATUS */}
+            <select
+              name="status"
+              value={form.status}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 text-sm rounded-sm"
+            >
+              <option value="draft">Draft</option>
+              <option value="published">Publish Now</option>
+              <option value="scheduled">Schedule</option>
+            </select>
+
+            {/* PUBLISH DATE */}
+            <Input
+              type="datetime-local"
+              name="publishedAt"
+              value={form.publishedAt}
+              onChange={handleChange}
+            />
+
+            {/* CATEGORY */}
             <select
               name="category"
               value={form.category}
@@ -183,9 +280,10 @@ export default function CreateNews() {
               className="w-full border px-3 py-2 text-sm rounded-sm"
             >
               <option value="">Select category</option>
+
               {categories.map((c) => (
-                <option key={c} value={c}>
-                  {c}
+                <option key={c.en} value={c.en}>
+                  {c.bn}
                 </option>
               ))}
             </select>
@@ -195,7 +293,6 @@ export default function CreateNews() {
               value={form.tags}
               onChange={handleChange}
               placeholder="Tags (comma separated)"
-              className="rounded-sm shadow-none"
             />
           </div>
 
@@ -235,12 +332,7 @@ export default function CreateNews() {
         </div>
       </div>
 
-      {/* FULL WIDTH BUTTON */}
-      <Button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="w-full rounded-sm py-5 shadow-none"
-      >
+      <Button onClick={handleSubmit} disabled={loading} className="w-full py-5">
         <Plus />
         {loading ? "Publishing..." : "Create News"}
       </Button>
