@@ -13,6 +13,7 @@ import {
   User,
   Boxes,
   House,
+  Newspaper,
 } from "lucide-react";
 
 import {
@@ -54,25 +55,20 @@ const data = {
       icon: LayoutDashboard,
     },
     {
-      title: "Products",
-      icon: Package,
+      title: "News",
+      icon: Newspaper,
       items: [
         {
-          title: "Add Product",
-          url: "/admin/products/create",
+          title: "Add News",
+          url: "/admin/news/create",
           icon: Plus,
         },
         {
-          title: "Product List",
-          url: "/admin/products",
+          title: "News List",
+          url: "/admin/news",
           icon: List,
         },
       ],
-    },
-    {
-      title: "Orders",
-      url: "/admin/orders",
-      icon: ShoppingCart,
     },
   ],
 };
@@ -89,8 +85,8 @@ export function AppSidebar(props) {
               className="flex items-center gap-2 mb-5"
             >
               <Image
-                src="/logo.png"
-                alt="Rufaida Elegence"
+                src="/newsportal.png"
+                alt="news portal"
                 width={60}
                 height={60}
                 className="rounded-sm"

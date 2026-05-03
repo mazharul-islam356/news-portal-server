@@ -13,8 +13,8 @@ export default function AdminSidebar() {
       <Link href="/admin/dashboard" className="mb-2 hover:text-gray-300">
         Dashboard
       </Link>
-      <Link href="/admin/products" className="mb-2 hover:text-gray-300">
-        Products
+      <Link href="/admin/news" className="mb-2 hover:text-gray-300">
+        News
       </Link>
       <Link href="/admin/categories" className="mb-2 hover:text-gray-300">
         Categories

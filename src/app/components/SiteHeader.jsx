@@ -12,7 +12,7 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-lg md:text-xl font-semibold pb-2">Add Products</h1>
+        <h1 className="text-lg md:text-xl font-semibold pb-2">Add News</h1>
         <div className="ml-auto mb-1 flex items-center gap-2">
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
