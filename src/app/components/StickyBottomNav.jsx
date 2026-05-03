@@ -4,11 +4,11 @@ import React from "react";
 
 const StickyBottomNav = ({ categories }) => {
   return (
-    <div className="max-w-7xl px-4 mx-auto">
-      <nav className="flex items-center justify-between">
+    <div>
+      <nav className="flex items-center justify-between font-bangla">
         {/* Desktop Menu */}
-        <div className="hidden lg:flex flex-1 items-center justify-center gap-8 px-6">
-          <Link href="/" className="py-5 text-lg font-semibold text-black">
+        <div className="hidden lg:flex flex-1 items-center gap-8 pl-3">
+          <Link href="/" className="py-5 text-lg font-semibold text-red-700">
             সর্বশেষ
           </Link>
 
@@ -24,7 +24,7 @@ const StickyBottomNav = ({ categories }) => {
         </div>
 
         {/* Right Actions */}
-        <div className="hidden lg:flex items-center border-l border-gray-200">
+        <div className="hidden lg:flex items-center  border-l border-gray-200">
           <button className="px-6 py-5 border-r border-gray-200 hover:bg-gray-50">
             <Search size={26} />
           </button>

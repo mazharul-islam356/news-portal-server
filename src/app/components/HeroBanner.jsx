@@ -43,10 +43,10 @@ export default function HeroSection() {
   const featured = dummyFeatured;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-bangla">
       {/* LEFT: Featured News */}
       <div className="lg:col-span-2 relative">
-        <div className="relative overflow-hidden rounded-xl">
+        <div className="relative overflow-hidden rounded-md">
           <img
             src={featured.featuredImage}
             className="w-full h-[420px] object-cover"
@@ -74,14 +74,14 @@ export default function HeroSection() {
       <div className="space-y-4">
         {dummyHighlights.map((item) => (
           <Link key={item._id} href={`/news/${item.slug}`}>
-            <div className="flex gap-3 group cursor-pointer bg-white rounded-lg p-2 hover:shadow-md transition">
+            <div className="flex gap-3 group cursor-pointer bg-white rounded-lg p-2 hover:shadow-md transition ">
               <img
                 src={item.featuredImage}
                 className="w-32 h-22 object-cover rounded-sm flex-shrink-0"
               />
 
               <div className="flex flex-col justify-center">
-                <p className="text-sm font-medium line-clamp-2 group-hover:text-blue-600">
+                <p className="text-sm font-medium line-clamp-2 group-hover:text-red-600 font-bangla">
                   {item.title_bn}
                 </p>
               </div>

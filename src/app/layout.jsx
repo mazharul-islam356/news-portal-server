@@ -11,6 +11,9 @@ const inter = Inter({
 export const metadata = {
   title: "News Portal",
   description: "A Bangladeshi news portal",
+  icons: {
+    icon: "/newsportal.png",
+  },
 };
 
 export default function RootLayout({ children }) {

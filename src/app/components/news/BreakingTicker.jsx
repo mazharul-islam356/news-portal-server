@@ -6,7 +6,7 @@ import { banglaNewsHeadlines } from "@/app/(public)/page";
 
 export default function BreakingTicker() {
   return (
-    <div className="bg-red-600 text-white flex items-center w-full overflow-hidden">
+    <div className="bg-red-600 text-white flex items-center w-full overflow-hidden rounded-xs font-bangla">
       {/* LABEL */}
       <span className="px-4 py-2 font-semibold bg-red-800 whitespace-nowrap flex items-center gap-2">
         {/* Animated dot */}
@@ -24,7 +24,7 @@ export default function BreakingTicker() {
             {banglaNewsHeadlines.map((item, index) => (
               <div key={item._id} className="flex items-center gap-4">
                 <Link href={`/news/${item.slug}`}>
-                  <span className="cursor-pointer hover:underline whitespace-nowrap">
+                  <span className="cursor-pointer hover:underline whitespace-nowrap text-sm">
                     {item.title_bn}
                   </span>
                 </Link>

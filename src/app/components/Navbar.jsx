@@ -33,8 +33,8 @@ export default function NewsNavbar() {
   });
 
   return (
-    <header className="w-full border-b bg-white py-3">
-      <div className="max-w-7xl mx-auto px-4">
+    <header className="w-full max-w-7xl mx-auto  border-b bg-white">
+      <div>
         {/* TOP BAR */}
         <div className="relative flex items-center justify-between py-4 border-b">
           {/* LEFT: LOGO */}
@@ -48,21 +48,21 @@ export default function NewsNavbar() {
           </Link>
 
           {/* CENTER: DATE + TIME (ABSOLUTE CENTER FIX) */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 text-center text-sm text-gray-600">
-            <div className="flex items-center justify-center gap-2 font-medium">
+          <div className="absolute left-1/2 transform -translate-x-1/2  text-center text-sm text-slate-800">
+            <div className="flex items-center justify-center gap-2 text-base font-semibold">
               <Calendar size={16} />
-              <span>{formattedDate}</span>
+              <span className="font-poppins">{formattedDate}</span>
             </div>
 
-            <div className="flex items-center justify-center gap-2 text-xs text-gray-500 mt-1">
+            <div className="flex items-center justify-center gap-1 text-xs text-gray-500 mt-1">
               <Clock size={14} />
-              <span>{formattedTime}</span>
+              <span className="font-poppins">{formattedTime}</span>
             </div>
           </div>
 
           {/* RIGHT: BREAKING NEWS */}
           <div className="flex items-center gap-3 max-w-xs">
-            <div className="flex items-center gap-3 bg-gray-50 border rounded-md px-3 py-4">
+            <div className="flex items-center gap-3 bg-gray-50 border rounded-md px-3 py-2">
               {/* IMAGE */}
               <div className="relative  overflow-hidden rounded">
                 <img
@@ -75,7 +75,7 @@ export default function NewsNavbar() {
 
               {/* TEXT */}
               <div className="flex flex-col">
-                <p className="text-sm text-gray-700 line-clamp-2">
+                <p className="text-sm font-bangla text-gray-700 line-clamp-2">
                   ঢাকায় আসছে নারীদের জন্য বিশেষ বাস সার্ভিস চালু হচ্ছে
                 </p>
               </div>
