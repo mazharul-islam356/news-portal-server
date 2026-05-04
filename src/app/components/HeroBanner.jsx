@@ -71,13 +71,13 @@ export default function HeroSection() {
       </div>
 
       {/* RIGHT: Highlights */}
-      <div className="space-y-4">
+      <div className="flex flex-col gap-2.5">
         {dummyHighlights.map((item) => (
           <Link key={item._id} href={`/news/${item.slug}`}>
-            <div className="flex gap-3 group cursor-pointer bg-white rounded-lg p-2 hover:shadow-md transition ">
+            <div className="flex gap-3 group cursor-pointer bg-white border border-gray-100 rounded-lg p-2 hover:shadow-md transition ">
               <img
                 src={item.featuredImage}
-                className="w-32 h-22 object-cover rounded-sm flex-shrink-0"
+                className="w-28 h-20 object-cover rounded-sm flex-shrink-0"
               />
 
               <div className="flex flex-col justify-center">

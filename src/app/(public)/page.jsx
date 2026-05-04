@@ -6,6 +6,11 @@ import BreakingTicker from "../components/news/BreakingTicker";
 import HeroSection from "../components/HeroBanner";
 import NewsCard from "../components/NewsCard";
 import Sidebar from "../components/Sidebar";
+import Politics from "./news/Politics";
+import BusinessPage from "../components/Politics";
+import PoliticsPage from "../components/Politics";
+import WorldPage from "../components/World";
+import National from "../components/National";
 export const categories = [
   { name: "Politics", slug: "politics" },
   { name: "Technology", slug: "technology" },
@@ -57,46 +62,10 @@ export default function HomePage() {
 
       {/* 🧨 Hero */}
       <HeroSection featured={featured} />
-
-      {/* 📊 Main Grid */}
-      <div className="grid md:grid-cols-4 gap-8">
-        {/* 📰 Left Content */}
-        <div className="md:col-span-3 space-y-10">
-          {/* Latest */}
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Latest News</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {news.slice(1, 10).map((item) => (
-                <NewsCard key={item._id} item={item} />
-              ))}
-            </div>
-          </div>
-
-          {/* Category Sections */}
-          {categories.map((cat) => {
-            const filtered = news
-              .filter((n) => n.category === cat.slug)
-              .slice(0, 6);
-
-            if (!filtered.length) return null;
-
-            return (
-              <div key={cat.slug}>
-                <h2 className="text-lg font-semibold mb-3">{cat.name}</h2>
-
-                <div className="grid md:grid-cols-3 gap-4">
-                  {filtered.map((item) => (
-                    <NewsCard key={item._id} item={item} />
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* 📌 Sidebar */}
-        <Sidebar trending={trending} />
-      </div>
+      <Politics />
+      <PoliticsPage />
+      <WorldPage />
+      <National />
     </div>
   );
 }
