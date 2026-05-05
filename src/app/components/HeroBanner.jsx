@@ -43,7 +43,7 @@ export default function HeroSection() {
   const featured = dummyFeatured;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-bangla">
+    <div className="grid max-w-7xl mx-auto grid-cols-1 lg:grid-cols-3 gap-6 font-bangla">
       {/* LEFT: Featured News */}
       <div className="lg:col-span-2 relative">
         <div className="relative overflow-hidden rounded-md">

@@ -6,11 +6,17 @@ import BreakingTicker from "../components/news/BreakingTicker";
 import HeroSection from "../components/HeroBanner";
 import NewsCard from "../components/NewsCard";
 import Sidebar from "../components/Sidebar";
-import Politics from "./news/Politics";
+import Politics from "./news/Buissness";
 import BusinessPage from "../components/Politics";
 import PoliticsPage from "../components/Politics";
 import WorldPage from "../components/World";
 import National from "../components/National";
+import EntertainmentSection from "../components/news/Binodon";
+import Buissness from "./news/Buissness";
+import AdBanner from "../components/AdBanner";
+import FeaturedGrid from "../components/news/FeaturedGrid";
+import ForYouSection from "./news/ForYouSection";
+import AdBanner2 from "../components/AdBanner2";
 export const categories = [
   { name: "Politics", slug: "politics" },
   { name: "Technology", slug: "technology" },
@@ -56,16 +62,23 @@ export default function HomePage() {
     .slice(0, 5);
 
   return (
-    <div className="max-w-7xl mx-auto py-5 space-y-5">
+    <div>
       {/* 🔴 Breaking */}
       <BreakingTicker news={news.slice(0, 5)} />
 
       {/* 🧨 Hero */}
       <HeroSection featured={featured} />
-      <Politics />
+      <AdBanner imageUrl="/1941257753831324090.jpg" />
+      <Buissness />
       <PoliticsPage />
+      <AdBanner2 imageUrl="/larevad.jpg" />
+      <EntertainmentSection />
       <WorldPage />
       <National />
+      <AdBanner imageUrl="/15921561955530599699.gif" />
+
+      <FeaturedGrid />
+      <ForYouSection />
     </div>
   );
 }

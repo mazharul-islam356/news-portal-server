@@ -6,7 +6,7 @@ import { banglaNewsHeadlines } from "@/app/(public)/page";
 
 export default function BreakingTicker() {
   return (
-    <div className="bg-red-600 text-white flex items-center w-full overflow-hidden rounded-xs font-bangla">
+    <div className="bg-red-600 max-w-7xl mx-auto my-4 text-white flex items-center w-full overflow-hidden rounded-xs font-bangla">
       {/* LABEL */}
       <span className="px-4 py-2 font-semibold bg-red-800 whitespace-nowrap flex items-center gap-2">
         {/* Animated dot */}

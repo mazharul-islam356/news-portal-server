@@ -12,8 +12,8 @@ export default function PoliticsPage() {
         {/* LEFT BIG DOUBLE IMAGE */}
         <div className="lg:col-span-2">
           <div className="grid grid-cols-2 gap-4">
-            <Image src="/p1.jpg" width={400} height={300} alt="" />
-            <Image src="/p2.jpg" width={400} height={300} alt="" />
+            <Image src="/news01.jpg" width={400} height={300} alt="" />
+            <Image src="/news04.jpg" width={400} height={300} alt="" />
           </div>
 
           <h3 className="text-xl font-semibold mt-4">

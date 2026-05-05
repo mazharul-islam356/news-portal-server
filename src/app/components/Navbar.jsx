@@ -65,8 +65,10 @@ export default function NewsNavbar() {
             <div className="flex items-center gap-3 bg-gray-50 border rounded-md px-3 py-2">
               {/* IMAGE */}
               <div className="relative  overflow-hidden rounded">
-                <img
-                  src="https://images.unsplash.com/photo-1495020689067-958852a7765e"
+                <Image
+                  width={400}
+                  height={400}
+                  src="/news01.jpg"
                   alt="news"
                   // fill
                   className="object-cover w-20 h-16"

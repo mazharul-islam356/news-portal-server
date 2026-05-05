@@ -3,7 +3,7 @@ import SpecialNews from "@/app/components/Special";
 import { businessNews } from "@/lib/data";
 import React from "react";
 
-const Politics = () => {
+const Buissness = () => {
   return (
     <div>
       <SpecialNews />
@@ -12,4 +12,4 @@ const Politics = () => {
   );
 };
 
-export default Politics;
+export default Buissness;

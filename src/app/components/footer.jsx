@@ -8,16 +8,25 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t">
+    <footer className="bg-white border-t mt-8">
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* BRAND */}
           <div>
-            <h2 className="text-2xl font-bold text-red-800">NewsToday</h2>
+            <div>
+              <Image
+                src="/newsportalLogo.png"
+                width={400}
+                height={400}
+                alt="logo"
+                className="object-cover w-32"
+              />
+            </div>
             <p className="text-gray-600 mt-3 text-sm leading-relaxed">
               বাংলাদেশের সর্বশেষ খবর, বিশ্লেষণ, রাজনীতি, বিনোদন ও আন্তর্জাতিক
               সংবাদ এক জায়গায়।
