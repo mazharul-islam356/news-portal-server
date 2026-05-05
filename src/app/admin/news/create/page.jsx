@@ -15,25 +15,34 @@ const initialState = {
   summary_en: "",
   content_bn: "",
   content_en: "",
-  slug: "",
+  writer: "",
   publishedAt: "",
   status: "draft",
-  category: "",
+
   tags: "",
+  category_en: "",
+  category_bn: "",
 
   // NEW FLAGS
   isBreaking: 1,
+  isBreakingTop: 1,
+  isLatest: 1,
   isTrending: 1,
   isFeatured: 1,
 };
 
 const categories = [
-  { en: "Politics", bn: "রাজনীতি" },
-  { en: "Sports", bn: "খেলাধুলা" },
-  { en: "Technology", bn: "প্রযুক্তি" },
-  { en: "Business", bn: "ব্যবসা" },
+  { en: "Bangladesh", bn: "বাংলাদেশ" },
+  { en: "World", bn: "বিশ্ব" },
+  { en: "Opinion", bn: "মতামত" },
+  { en: "Business", bn: "বাণিজ্য" },
   { en: "Entertainment", bn: "বিনোদন" },
-  { en: "International", bn: "আন্তর্জাতিক" },
+  { en: "Lifestyle", bn: "জীবনযাপন" },
+  { en: "Jobs", bn: "চাকরি" },
+  { en: "Sports", bn: "খেলা" },
+  { en: "Technology", bn: "প্রযুক্তি" },
+  { en: "Education", bn: "শিক্ষা" },
+  { en: "Religion", bn: "ধর্ম" },
 ];
 
 export default function CreateNews() {
@@ -103,9 +112,9 @@ export default function CreateNews() {
     <div className="max-w-7xl mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold">Create News</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* LEFT */}
-        <div className="md:col-span-2 space-y-5">
+        <div className="md:col-span-3 space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               name="title_bn"
@@ -151,184 +160,249 @@ export default function CreateNews() {
         </div>
 
         {/* RIGHT */}
-        <div className="space-y-4">
-          <div className="border p-4 rounded-sm space-y-4">
-            <h2 className="text-sm font-semibold">News Flags</h2>
 
-            {/* Breaking */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm">Breaking</span>
-              <div className="flex gap-3 text-sm">
-                <label>
-                  <input
-                    type="radio"
-                    name="isBreaking"
-                    checked={form.isBreaking === true}
-                    onChange={() =>
-                      setForm((prev) => ({ ...prev, isBreaking: true }))
-                    }
-                  />
-                  <span className="ml-1">Yes</span>
-                </label>
+        <div className="border p-4 col-span-1 rounded-sm bg-gray-50 space-y-3">
+          <input
+            type="file"
+            id="img"
+            className="hidden"
+            onChange={handleFileChange}
+          />
 
-                <label>
-                  <input
-                    type="radio"
-                    name="isBreaking"
-                    checked={form.isBreaking === false}
-                    onChange={() =>
-                      setForm((prev) => ({ ...prev, isBreaking: false }))
-                    }
-                  />
-                  <span className="ml-1">No</span>
-                </label>
+          <label
+            htmlFor="img"
+            className="block border border-dashed p-4 text-center cursor-pointer text-sm"
+          >
+            Upload image
+          </label>
+
+          <div className="grid grid-cols-2 gap-2">
+            {previews.map((img, i) => (
+              <div key={i} className="relative">
+                <img
+                  src={img}
+                  className="h-20 w-full object-cover rounded-sm border"
+                />
+                <button
+                  onClick={() => handleRemoveImage(i)}
+                  className="absolute top-1 right-1 text-xs bg-red-500 text-white px-2 rounded-sm"
+                >
+                  X
+                </button>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="space-y-4 grid grid-cols-2 gap-x-4">
+        <div className="border p-4 rounded-sm space-y-4">
+          <h2 className="text-sm font-semibold">News Flags</h2>
 
-            {/* Trending */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm">Trending</span>
-              <div className="flex gap-3 text-sm">
-                <label>
-                  <input
-                    type="radio"
-                    name="isTrending"
-                    checked={form.isTrending === true}
-                    onChange={() =>
-                      setForm((prev) => ({ ...prev, isTrending: true }))
-                    }
-                  />
-                  Yes
-                </label>
+          {/* Breaking */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Breaking</span>
+            <div className="flex gap-3 text-sm">
+              <label>
+                <input
+                  type="radio"
+                  name="isBreaking"
+                  checked={form.isBreaking === true}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreaking: true }))
+                  }
+                />
+                <span className="ml-1">Yes</span>
+              </label>
 
-                <label>
-                  <input
-                    type="radio"
-                    name="isTrending"
-                    checked={form.isTrending === false}
-                    onChange={() =>
-                      setForm((prev) => ({ ...prev, isTrending: false }))
-                    }
-                  />
-                  No
-                </label>
-              </div>
-            </div>
-
-            {/* Featured */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm">Featured</span>
-              <div className="flex gap-3 text-sm">
-                <label>
-                  <input
-                    type="radio"
-                    checked={form.isBreaking === 0}
-                    onChange={() =>
-                      setForm((prev) => ({ ...prev, isBreaking: 0 }))
-                    }
-                  />
-                  Yes
-                </label>
-
-                <label>
-                  <input
-                    type="radio"
-                    checked={form.isBreaking === 1}
-                    onChange={() =>
-                      setForm((prev) => ({ ...prev, isBreaking: 1 }))
-                    }
-                  />
-                  No
-                </label>
-              </div>
+              <label>
+                <input
+                  type="radio"
+                  name="isBreaking"
+                  checked={form.isBreaking === false}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreaking: false }))
+                  }
+                />
+                <span className="ml-1">No</span>
+              </label>
             </div>
           </div>
-          <div className="border p-4 space-y-3 rounded-sm">
-            {/* SLUG */}
-            <Input
-              name="slug"
-              value={form.slug}
-              onChange={handleChange}
-              placeholder="Slug"
-            />
 
-            {/* STATUS */}
-            <select
-              name="status"
-              value={form.status}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 text-sm rounded-sm"
-            >
-              <option value="draft">Draft</option>
-              <option value="published">Publish Now</option>
-              <option value="scheduled">Schedule</option>
-            </select>
+          {/* latest */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Latest News</span>
+            <div className="flex gap-3 text-sm">
+              <label>
+                <input
+                  type="radio"
+                  name="isLatest"
+                  checked={form.isLatest === true}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isLatest: true }))
+                  }
+                />
+                <span className="ml-1">Yes</span>
+              </label>
 
-            {/* PUBLISH DATE */}
-            <Input
-              type="datetime-local"
-              name="publishedAt"
-              value={form.publishedAt}
-              onChange={handleChange}
-            />
-
-            {/* CATEGORY */}
-            <select
-              name="category"
-              value={form.category}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 text-sm rounded-sm"
-            >
-              <option value="">Select category</option>
-
-              {categories.map((c) => (
-                <option key={c.en} value={c.en}>
-                  {c.bn}
-                </option>
-              ))}
-            </select>
-
-            <Input
-              name="tags"
-              value={form.tags}
-              onChange={handleChange}
-              placeholder="Tags (comma separated)"
-            />
-          </div>
-
-          {/* IMAGE */}
-          <div className="border p-4 rounded-sm bg-gray-50 space-y-3">
-            <input
-              type="file"
-              id="img"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-
-            <label
-              htmlFor="img"
-              className="block border border-dashed p-4 text-center cursor-pointer text-sm"
-            >
-              Upload image
-            </label>
-
-            <div className="grid grid-cols-2 gap-2">
-              {previews.map((img, i) => (
-                <div key={i} className="relative">
-                  <img
-                    src={img}
-                    className="h-20 w-full object-cover rounded-sm border"
-                  />
-                  <button
-                    onClick={() => handleRemoveImage(i)}
-                    className="absolute top-1 right-1 text-xs bg-red-500 text-white px-2 rounded-sm"
-                  >
-                    X
-                  </button>
-                </div>
-              ))}
+              <label>
+                <input
+                  type="radio"
+                  name="isLatest"
+                  checked={form.isLatest === false}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isLatest: false }))
+                  }
+                />
+                <span className="ml-1">No</span>
+              </label>
             </div>
           </div>
+          {/* Breaking */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Breaking Top</span>
+            <div className="flex gap-3 text-sm">
+              <label>
+                <input
+                  type="radio"
+                  name="isBreakingTop"
+                  checked={form.isBreakingTop === true}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreakingTop: true }))
+                  }
+                />
+                <span className="ml-1">Yes</span>
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="isBreakingTop"
+                  checked={form.isBreakingTop === false}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreakingTop: false }))
+                  }
+                />
+                <span className="ml-1">No</span>
+              </label>
+            </div>
+          </div>
+          {/* Trending */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Trending</span>
+            <div className="flex gap-3 text-sm">
+              <label>
+                <input
+                  type="radio"
+                  name="isTrending"
+                  checked={form.isTrending === true}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isTrending: true }))
+                  }
+                />
+                Yes
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="isTrending"
+                  checked={form.isTrending === false}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isTrending: false }))
+                  }
+                />
+                No
+              </label>
+            </div>
+          </div>
+
+          {/* Featured */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Featured</span>
+            <div className="flex gap-3 text-sm">
+              <label>
+                <input
+                  type="radio"
+                  checked={form.isBreaking === 0}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreaking: 0 }))
+                  }
+                />
+                Yes
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  checked={form.isBreaking === 1}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreaking: 1 }))
+                  }
+                />
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="border p-4 space-y-3 rounded-sm">
+          {/* writer name */}
+          <Input
+            name="writer"
+            value={form.writer}
+            onChange={handleChange}
+            placeholder="Writer Name"
+          />
+
+          {/* STATUS */}
+          <select
+            name="status"
+            value={form.status}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 text-sm rounded-sm"
+          >
+            <option value="draft">Draft</option>
+            <option value="published">Publish Now</option>
+            <option value="scheduled">Schedule</option>
+          </select>
+
+          {/* PUBLISH DATE */}
+          <Input
+            type="datetime-local"
+            name="publishedAt"
+            value={form.publishedAt}
+            onChange={handleChange}
+          />
+
+          {/* CATEGORY */}
+          <select
+            name="category"
+            value={form.category}
+            onChange={(e) => {
+              const selected = categories.find((c) => c.en === e.target.value);
+
+              setForm({
+                ...form,
+                category_en: selected.en,
+                category_bn: selected.bn,
+              });
+            }}
+            className="w-full border px-3 py-2 text-sm rounded-sm"
+          >
+            <option value="">Select category</option>
+
+            {categories.map((c) => (
+              <option key={c.en} value={c.en}>
+                {c.bn}
+              </option>
+            ))}
+          </select>
+
+          <Input
+            name="tags"
+            value={form.tags}
+            onChange={handleChange}
+            placeholder="Tags (comma separated)"
+          />
         </div>
       </div>
 

@@ -6,7 +6,7 @@ import { Facebook, Twitter, Link as LinkIcon, Share2 } from "lucide-react";
 const news = {
   title_bn:
     "বাংলাদেশে নতুন প্রযুক্তি বিপ্লব: ডিজিটাল ইকোনমিতে বড় পরিবর্তনের ইঙ্গিত",
-  featuredImage: "https://images.unsplash.com/photo-1528747045269-390fe33c19c9",
+  featuredImage: "/news03.jpg",
   author: "Mazharul Islam",
   date: "2026-05-04",
   category: "Technology",
@@ -56,14 +56,12 @@ export default function NewsDetailsPage() {
     <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
       {/* LEFT CONTENT */}
       <div className="lg:col-span-2">
-        {/* Category */}
         <p className="text-xs uppercase tracking-wide text-gray-500">
           {news.category}
         </p>
 
-        {/* Title + Share */}
         <div className="flex items-start justify-between gap-4 mt-2">
-          <h1 className="text-3xl md:text-4xl font-bold leading-snug">
+          <h1 className="text-2xl md:text-3xl font-bold leading-snug">
             {news.title_bn}
           </h1>
 
@@ -92,7 +90,7 @@ export default function NewsDetailsPage() {
         </div>
 
         {/* Image */}
-        <div className="mt-6 rounded-xl overflow-hidden">
+        <div className="mt-6 rounded-md overflow-hidden">
           <img
             src={news.featuredImage}
             className="w-full h-[420px] object-cover"
@@ -109,13 +107,13 @@ export default function NewsDetailsPage() {
       <div>
         <h2 className="text-lg font-semibold mb-4">Latest News</h2>
 
-        <div className="space-y-4">
+        <div className="flex flex-col gap-2 ">
           {latestNews.map((item) => (
             <Link key={item._id} href={`/news/${item.slug}`}>
               <div className="flex gap-3 group cursor-pointer">
                 <img
                   src={item.image}
-                  className="w-20 h-16 object-cover rounded-md"
+                  className="w-20 h-16 object-cover rounded-xs"
                 />
                 <p className="text-sm line-clamp-2 group-hover:text-blue-600">
                   {item.title}

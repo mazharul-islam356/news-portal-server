@@ -12,7 +12,7 @@ export default function NewsPage() {
           {/* BIG NEWS */}
           <div>
             <img
-              src="/img-main.jpg"
+              src="/news02.jpg"
               className="w-full h-64 object-cover rounded"
             />
             <h2 className="text-red-600 font-bold text-xl mt-3">
@@ -29,7 +29,7 @@ export default function NewsPage() {
             {[1, 2].map((i) => (
               <div key={i} className="flex gap-3">
                 <img
-                  src={`/img${i}.jpg`}
+                  src={`/news04.jpg`}
                   className="w-24 h-20 object-cover rounded"
                 />
                 <div>
@@ -46,8 +46,8 @@ export default function NewsPage() {
         {/* ================= CENTER COLUMN ================= */}
         <div className="space-y-6">
           {/* BANNER */}
-          <div className="bg-yellow-100 p-4 text-center rounded">
-            <h2 className="text-xl font-bold">আমার দেশ প্রতিদিন</h2>
+          <div className="bg-yellow-100 p-4 py-9 text-center rounded">
+            <h2 className="text-xl font-bold"> নির্ভয় বার্তা প্রতিদিন</h2>
             <p className="text-sm">ইতিহাস | ঐতিহ্য | সংস্কৃতি</p>
           </div>
 
