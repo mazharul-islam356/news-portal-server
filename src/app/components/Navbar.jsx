@@ -8,13 +8,14 @@ import Link from "next/link";
 export default function NewsNavbar() {
   const [time, setTime] = useState(new Date());
   const categories = [
-    { name: "রাজনীতি", slug: "politics" },
-    { name: "প্রযুক্তি", slug: "technology" },
-    { name: "খেলা", slug: "sports" },
-    { name: "আন্তর্জাতিক", slug: "international" },
-    { name: "বাণিজ্য", slug: "business" },
-    { name: "বিনোদন", slug: "entertainment" },
+    { name: { bn: "রাজনীতি", en: "Politics" }, slug: "politics" },
+    { name: { bn: "প্রযুক্তি", en: "Technology" }, slug: "technology" },
+    { name: { bn: "খেলা", en: "Sports" }, slug: "sports" },
+    { name: { bn: "আন্তর্জাতিক", en: "International" }, slug: "international" },
+    { name: { bn: "বাণিজ্য", en: "Business" }, slug: "business" },
+    { name: { bn: "বিনোদন", en: "Entertainment" }, slug: "entertainment" },
   ];
+
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);

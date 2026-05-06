@@ -10,11 +10,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Image from "next/image";
+import { useLanguage } from "@/context/lagnguageContext";
+import { getTranslatedValue } from "@/hooks/getTranslatedValue";
 
 export default function HeroSection() {
   const [breaking, setBreaking] = useState([]);
   const [featured, setFeatured] = useState([]);
-
+  const { lang } = useLanguage();
   // breaking api
   useEffect(() => {
     const fetchBreaking = async () => {
@@ -50,22 +52,26 @@ export default function HeroSection() {
       {/* LEFT: Featured */}
       <div className="lg:col-span-2 relative">
         <Swiper
-          modules={[Autoplay, Pagination, Navigation]}
+          modules={[
+            // Autoplay,
+            Pagination,
+            Navigation,
+          ]}
           autoplay={{ delay: 4000 }}
           loop={true}
           pagination={{ clickable: true }}
-          navigation={true}
+          // navigation={true}
           className="rounded-md overflow-hidden"
         >
           {featured.map((item, index) => (
             <SwiperSlide key={index}>
               <div className="relative">
                 <Image
-                  width={800}
+                  width={1200}
                   height={800}
                   alt={item.title.bn}
                   src={item.featuredImage[0]}
-                  className="w-full h-[420px] object-cover"
+                  className="w-full h-105 object-cover"
                 />
 
                 {/* overlay */}
@@ -74,11 +80,11 @@ export default function HeroSection() {
                 {/* content */}
                 <div className="absolute bottom-0 p-6 text-white">
                   <h1 className="text-2xl md:text-3xl font-bold leading-snug">
-                    {item.title.bn}
+                    {getTranslatedValue(item.title, lang)}
                   </h1>
 
                   <Link href={`/news/${item.slug}`}>
-                    <span className="inline-block mt-3 text-sm underline hover:text-blue-300 transition">
+                    <span className="inline-block my-3 text-sm underline hover:text-blue-300 transition">
                       বিস্তারিত পড়ুন →
                     </span>
                   </Link>

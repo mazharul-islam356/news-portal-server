@@ -23,11 +23,11 @@ export default function BreakingTicker() {
           <div className="flex items-center gap-6 px-4 py-2">
             {banglaNewsHeadlines.map((item, index) => (
               <div key={item._id} className="flex items-center gap-4">
-                <Link href={`/news/${item.slug}`}>
-                  <span className="cursor-pointer hover:underline whitespace-nowrap text-sm">
+                <div>
+                  <span className=" whitespace-nowrap text-sm">
                     {item.title_bn}
                   </span>
-                </Link>
+                </div>
 
                 {/* DOT SEPARATOR */}
                 {index !== banglaNewsHeadlines.length - 1 && (

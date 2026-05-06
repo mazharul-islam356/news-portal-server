@@ -7,15 +7,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
+import Image from "next/image";
 
 const initialState = {
   title_bn: "",
   title_en: "",
-  summary_bn: "",
-  summary_en: "",
+  // summary_bn: "",
+  // summary_en: "",
   content_bn: "",
   content_en: "",
-  writer: "",
+  writer_bn: "",
+  writer_en: "",
   publishedAt: "",
   status: "draft",
 
@@ -90,6 +92,8 @@ export default function CreateNews() {
         data.append("images", file);
       });
 
+      // console.log(data);
+      // return;
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/news`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -129,7 +133,7 @@ export default function CreateNews() {
               placeholder="Title (English)"
             />
 
-            <Textarea
+            {/* <Textarea
               name="summary_bn"
               value={form.summary_bn}
               onChange={handleChange}
@@ -140,7 +144,7 @@ export default function CreateNews() {
               value={form.summary_en}
               onChange={handleChange}
               placeholder="Summary (English)"
-            />
+            /> */}
 
             <Textarea
               rows={6}
@@ -179,7 +183,10 @@ export default function CreateNews() {
           <div className="grid grid-cols-2 gap-2">
             {previews.map((img, i) => (
               <div key={i} className="relative">
-                <img
+                <Image
+                  alt="news_image"
+                  width={500}
+                  height={500}
                   src={img}
                   className="h-20 w-full object-cover rounded-sm border"
                 />
@@ -346,12 +353,20 @@ export default function CreateNews() {
         </div>
         <div className="border p-4 space-y-3 rounded-sm">
           {/* writer name */}
-          <Input
-            name="writer"
-            value={form.writer}
-            onChange={handleChange}
-            placeholder="Writer Name"
-          />
+          <div className="flex items-center gap-2">
+            <Input
+              name="writer_bn"
+              value={form.writer_bn}
+              onChange={handleChange}
+              placeholder="Writer Name (Bangla)"
+            />
+            <Input
+              name="writer_en"
+              value={form.writer_en}
+              onChange={handleChange}
+              placeholder="Writer Name (English)"
+            />
+          </div>
 
           {/* STATUS */}
           <select

@@ -126,6 +126,36 @@
 .poppins {
   font-family: "Poppins", sans-serif;
 }
+
+.swiper-pagination-bullet {
+  background: red;
+}
+.swiper-pagination-bullet-active {
+  background: red;
+}
+
+.react-calendar {
+  border: none;
+  width: 100%;
+  font-family: inherit;
+}
+
+.react-calendar__tile--active {
+  background: #dc2626 !important; /* red */
+  color: white;
+  border-radius: 8px;
+}
+
+.react-calendar__tile--now {
+  background: #fee2e2;
+  border-radius: 8px;
+}
+
+.react-calendar__navigation button {
+  color: #dc2626;
+  font-weight: 600;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
