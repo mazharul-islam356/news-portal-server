@@ -24,11 +24,11 @@ const initialState = {
   category_bn: "",
 
   // NEW FLAGS
-  isBreaking: 1,
-  isBreakingTop: 1,
-  isLatest: 1,
-  isTrending: 1,
-  isFeatured: 1,
+  isBreaking: 0,
+  isBreakingTop: 0,
+  isLatest: 0,
+  isTrending: 0,
+  isFeatured: 0,
 };
 
 const categories = [

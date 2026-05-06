@@ -1,10 +1,18 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL:
-    process.env.NEXT_PUBLIC_API_URL ||
-    "https://ecommerce-server-nine-ashen.vercel.app/api",
-  withCredentials: false,
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
+  withCredentials: true, // যদি auth লাগে
 });
 
-export default api;
+// optional: request interceptor
+axiosInstance.interceptors.request.use(
+  (config) => {
+    // token add করতে চাইলে এখানে করো
+    // config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+
+export default axiosInstance;

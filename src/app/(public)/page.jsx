@@ -63,10 +63,8 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* 🔴 Breaking */}
       <BreakingTicker news={news.slice(0, 5)} />
 
-      {/* 🧨 Hero */}
       <HeroSection featured={featured} />
       <AdBanner imageUrl="/1941257753831324090.jpg" />
       <Buissness />
