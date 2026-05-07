@@ -34,17 +34,37 @@ const initialState = {
 };
 
 const categories = [
-  { en: "Bangladesh", bn: "বাংলাদেশ" },
-  { en: "World", bn: "বিশ্ব" },
-  { en: "Opinion", bn: "মতামত" },
-  { en: "Business", bn: "বাণিজ্য" },
-  { en: "Entertainment", bn: "বিনোদন" },
-  { en: "Lifestyle", bn: "জীবনযাপন" },
-  { en: "Jobs", bn: "চাকরি" },
-  { en: "Sports", bn: "খেলা" },
-  { en: "Technology", bn: "প্রযুক্তি" },
-  { en: "Education", bn: "শিক্ষা" },
-  { en: "Religion", bn: "ধর্ম" },
+  { bn: "বাংলাদেশ", en: "Bangladesh" },
+  { bn: "বিশ্ব", en: "World" },
+  { bn: "আন্তর্জাতিক", en: "International" },
+
+  { bn: "রাজনীতি", en: "Politics" },
+  { bn: "মতামত", en: "Opinion" },
+  { bn: "জাতীয়", en: "National" },
+
+  { bn: "বাণিজ্য", en: "Business" },
+  { bn: "অর্থনীতি", en: "Economy" },
+
+  { bn: "প্রযুক্তি", en: "Technology" },
+  { bn: "বিজ্ঞান", en: "Science" },
+
+  { bn: "খেলা", en: "Sports" },
+
+  { bn: "বিনোদন", en: "Entertainment" },
+  { bn: "লাইফস্টাইল", en: "Lifestyle" },
+
+  { bn: "শিক্ষা", en: "Education" },
+  { bn: "চাকরি", en: "Jobs" },
+
+  { bn: "ধর্ম", en: "Religion" },
+  { bn: "দুর্নীতি", en: "corruption" },
+
+  { bn: "স্বাস্থ্য", en: "Health" },
+  { bn: "পরিবেশ", en: "Environment" },
+  { bn: "অপরাধ", en: "Crime" },
+  { bn: "আইন ও আদালত", en: "Law & Court" },
+  { bn: "গণমাধ্যম", en: "Media" },
+  { bn: "প্রবাস", en: "Diaspora" },
 ];
 
 export default function CreateNews() {
@@ -208,26 +228,33 @@ export default function CreateNews() {
           {/* Breaking */}
           <div className="flex items-center justify-between">
             <span className="text-sm">Breaking</span>
+
             <div className="flex gap-3 text-sm">
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
                   name="isBreaking"
-                  checked={form.isBreaking === true}
+                  checked={form.isBreaking === 1}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isBreaking: true }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isBreaking: 1,
+                    }))
                   }
                 />
                 <span className="ml-1">Yes</span>
               </label>
 
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
                   name="isBreaking"
-                  checked={form.isBreaking === false}
+                  checked={form.isBreaking === 0}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isBreaking: false }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isBreaking: 0,
+                    }))
                   }
                 />
                 <span className="ml-1">No</span>
@@ -235,90 +262,113 @@ export default function CreateNews() {
             </div>
           </div>
 
-          {/* latest */}
+          {/* Latest */}
           <div className="flex items-center justify-between">
             <span className="text-sm">Latest News</span>
+
             <div className="flex gap-3 text-sm">
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
                   name="isLatest"
-                  checked={form.isLatest === true}
+                  checked={form.isLatest === 1}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isLatest: true }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isLatest: 1,
+                    }))
                   }
                 />
                 <span className="ml-1">Yes</span>
               </label>
 
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
                   name="isLatest"
-                  checked={form.isLatest === false}
+                  checked={form.isLatest === 0}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isLatest: false }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isLatest: 0,
+                    }))
                   }
                 />
                 <span className="ml-1">No</span>
               </label>
             </div>
           </div>
-          {/* Breaking */}
+
+          {/* Breaking Top */}
           <div className="flex items-center justify-between">
             <span className="text-sm">Breaking Top</span>
+
             <div className="flex gap-3 text-sm">
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
                   name="isBreakingTop"
-                  checked={form.isBreakingTop === true}
+                  checked={form.isBreakingTop === 1}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isBreakingTop: true }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isBreakingTop: 1,
+                    }))
                   }
                 />
                 <span className="ml-1">Yes</span>
               </label>
 
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
                   name="isBreakingTop"
-                  checked={form.isBreakingTop === false}
+                  checked={form.isBreakingTop === 0}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isBreakingTop: false }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isBreakingTop: 0,
+                    }))
                   }
                 />
                 <span className="ml-1">No</span>
               </label>
             </div>
           </div>
+
           {/* Trending */}
           <div className="flex items-center justify-between">
             <span className="text-sm">Trending</span>
+
             <div className="flex gap-3 text-sm">
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
                   name="isTrending"
-                  checked={form.isTrending === true}
+                  checked={form.isTrending === 1}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isTrending: true }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isTrending: 1,
+                    }))
                   }
                 />
-                Yes
+                <span className="ml-1">Yes</span>
               </label>
 
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
                   name="isTrending"
-                  checked={form.isTrending === false}
+                  checked={form.isTrending === 0}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isTrending: false }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isTrending: 0,
+                    }))
                   }
                 />
-                No
+                <span className="ml-1">No</span>
               </label>
             </div>
           </div>
@@ -326,27 +376,36 @@ export default function CreateNews() {
           {/* Featured */}
           <div className="flex items-center justify-between">
             <span className="text-sm">Featured</span>
+
             <div className="flex gap-3 text-sm">
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
-                  checked={form.isBreaking === 0}
+                  name="isFeatured"
+                  checked={form.isFeatured === 1}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isBreaking: 0 }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isFeatured: 1,
+                    }))
                   }
                 />
-                Yes
+                <span className="ml-1">Yes</span>
               </label>
 
-              <label>
+              <label className="flex items-center">
                 <input
                   type="radio"
-                  checked={form.isBreaking === 1}
+                  name="isFeatured"
+                  checked={form.isFeatured === 0}
                   onChange={() =>
-                    setForm((prev) => ({ ...prev, isBreaking: 1 }))
+                    setForm((prev) => ({
+                      ...prev,
+                      isFeatured: 0,
+                    }))
                   }
                 />
-                No
+                <span className="ml-1">No</span>
               </label>
             </div>
           </div>

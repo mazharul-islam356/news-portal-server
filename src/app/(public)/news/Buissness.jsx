@@ -1,13 +1,30 @@
+"use client";
 import NewsSection from "@/app/components/NewsSection";
-import SpecialNews from "@/app/components/Special";
-import { businessNews } from "@/lib/data";
-import React from "react";
+
+import { getNewsByCategory } from "@/service/newsApi";
+import React, { useEffect, useState } from "react";
 
 const Buissness = () => {
+  const [business, setBusiness] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await getNewsByCategory("business", "en");
+
+        setBusiness(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  console.log("business news", business);
   return (
     <div>
-      <SpecialNews />
-      <NewsSection title="বাণিজ্য" data={businessNews} />
+      <NewsSection title="বাণিজ্য" data={business} />
     </div>
   );
 };

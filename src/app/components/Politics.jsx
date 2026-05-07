@@ -1,7 +1,28 @@
 // app/politics/page.jsx
+import { getNewsByCategory } from "@/service/newsApi";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function PoliticsPage() {
+  const [politics, setPolitics] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await getNewsByCategory("politics", "en");
+
+        console.log(data); // check data here
+
+        setPolitics(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  console.log("politics", politics);
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
       <h2 className="text-2xl font-bold border-b-2 border-red-500 inline-block mb-8">

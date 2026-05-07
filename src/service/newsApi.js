@@ -21,3 +21,7 @@ export const getBreakingNews = () => fetchData("/news/breaking-news");
 export const getTrendingNews = () => fetchData("/news/trending-news");
 
 export const getFeaturedNews = () => fetchData("/news/featured-news");
+
+export const getNewsByCategory = (category, lang = "bn") => {
+  return fetchData(`/news/category?category=${category}&lang=${lang}`);
+};

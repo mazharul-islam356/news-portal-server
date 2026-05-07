@@ -45,8 +45,6 @@ export default function HeroSection() {
     fetchFeatured();
   }, []);
 
-  console.log(featured);
-
   return (
     <div className="grid max-w-7xl mx-auto grid-cols-1 lg:grid-cols-3 gap-6 font-bangla">
       {/* LEFT: Featured */}
@@ -97,7 +95,7 @@ export default function HeroSection() {
 
       {/* RIGHT: Trending */}
       <div className="flex flex-col gap-2.5">
-        {breaking.map((item) => (
+        {breaking?.slice(0, 4).map((item) => (
           <Link key={item._id} href={`/news/${item.slug}`}>
             <div className="flex gap-3 group cursor-pointer bg-white border border-gray-100 rounded-lg p-2 hover:shadow-md transition">
               <Image
@@ -110,7 +108,7 @@ export default function HeroSection() {
 
               <div className="flex flex-col justify-center">
                 <p className="text-sm font-medium line-clamp-2 group-hover:text-red-600 font-bangla">
-                  {item.title.bn}
+                  {getTranslatedValue(item.title, lang)}
                 </p>
               </div>
             </div>

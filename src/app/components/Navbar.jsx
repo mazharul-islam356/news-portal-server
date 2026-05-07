@@ -8,12 +8,38 @@ import Link from "next/link";
 export default function NewsNavbar() {
   const [time, setTime] = useState(new Date());
   const categories = [
-    { name: { bn: "রাজনীতি", en: "Politics" }, slug: "politics" },
-    { name: { bn: "প্রযুক্তি", en: "Technology" }, slug: "technology" },
-    { name: { bn: "খেলা", en: "Sports" }, slug: "sports" },
+    { name: { bn: "বাংলাদেশ", en: "Bangladesh" }, slug: "bangladesh" },
+    { name: { bn: "বিশ্ব", en: "World" }, slug: "world" },
     { name: { bn: "আন্তর্জাতিক", en: "International" }, slug: "international" },
+
+    { name: { bn: "রাজনীতি", en: "Politics" }, slug: "politics" },
+    { name: { bn: "দুর্নীতি", en: "corruption" }, slug: "corruption" },
+    { name: { bn: "মতামত", en: "Opinion" }, slug: "opinion" },
+
     { name: { bn: "বাণিজ্য", en: "Business" }, slug: "business" },
+    { name: { bn: "অর্থনীতি", en: "Economy" }, slug: "economy" },
+    { name: { bn: "জাতীয়", en: "National" }, slug: "national" },
+
+    { name: { bn: "প্রযুক্তি", en: "Technology" }, slug: "technology" },
+    { name: { bn: "বিজ্ঞান", en: "Science" }, slug: "science" },
+
+    { name: { bn: "খেলা", en: "Sports" }, slug: "sports" },
+
     { name: { bn: "বিনোদন", en: "Entertainment" }, slug: "entertainment" },
+    { name: { bn: "লাইফস্টাইল", en: "Lifestyle" }, slug: "lifestyle" },
+
+    { name: { bn: "শিক্ষা", en: "Education" }, slug: "education" },
+    { name: { bn: "চাকরি", en: "Jobs" }, slug: "jobs" },
+
+    { name: { bn: "ধর্ম", en: "Religion" }, slug: "religion" },
+
+    // ➕ Newly added useful categories
+    { name: { bn: "স্বাস্থ্য", en: "Health" }, slug: "health" },
+    { name: { bn: "পরিবেশ", en: "Environment" }, slug: "environment" },
+    { name: { bn: "অপরাধ", en: "Crime" }, slug: "crime" },
+    { name: { bn: "আইন ও আদালত", en: "Law & Court" }, slug: "law-court" },
+    { name: { bn: "গণমাধ্যম", en: "Media" }, slug: "media" },
+    { name: { bn: "প্রবাস", en: "Diaspora" }, slug: "diaspora" },
   ];
 
   useEffect(() => {

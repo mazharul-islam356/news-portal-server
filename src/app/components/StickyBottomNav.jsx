@@ -21,7 +21,7 @@ const StickyBottomNav = ({ categories }) => {
             সর্বশেষ
           </Link>
 
-          {categories.map((category) => (
+          {categories.slice(0, 6).map((category) => (
             <Link
               key={category.slug}
               href={`/category/${category.slug}`}

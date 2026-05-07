@@ -1,7 +1,28 @@
-// app/world/page.jsx
+"use client";
+import { getNewsByCategory } from "@/service/newsApi";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function WorldPage() {
+  const [world, setworld] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await getNewsByCategory("world", "en");
+
+        console.log(data); // check data here
+
+        setworld(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  console.log("politics", world);
   return (
     // FULL PAGE BACKGROUND
     <div className="bg-gray-100 min-h-screen">
