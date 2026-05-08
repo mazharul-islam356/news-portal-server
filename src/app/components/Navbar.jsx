@@ -4,6 +4,9 @@ import { Calendar, Clock } from "lucide-react";
 import Image from "next/image";
 import StickyBottomNav from "./StickyBottomNav";
 import Link from "next/link";
+import { useLanguage } from "@/context/lagnguageContext";
+import { getBreakingTopNews } from "@/service/newsApi";
+import { getTranslatedValue } from "@/hooks/getTranslatedValue";
 
 export default function NewsNavbar() {
   const [time, setTime] = useState(new Date());
@@ -41,7 +44,24 @@ export default function NewsNavbar() {
     { name: { bn: "গণমাধ্যম", en: "Media" }, slug: "media" },
     { name: { bn: "প্রবাস", en: "Diaspora" }, slug: "diaspora" },
   ];
+  const [top, setTop] = useState([]);
+  const { lang } = useLanguage();
 
+  useEffect(() => {
+    const fetchTop = async () => {
+      try {
+        const data = await getBreakingTopNews();
+        console.log(data);
+        setTop(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Error fetching top news:", error);
+      }
+    };
+
+    fetchTop();
+  }, []);
+
+  const mainNews = top[0];
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
@@ -61,7 +81,7 @@ export default function NewsNavbar() {
 
   return (
     <header className="w-full max-w-7xl mx-auto  border-b bg-white">
-      <div>
+      <div className="hidden md:block">
         {/* TOP BAR */}
         <div className="relative flex items-center justify-between py-4 border-b">
           {/* LEFT: LOGO */}
@@ -75,7 +95,7 @@ export default function NewsNavbar() {
           </Link>
 
           {/* CENTER: DATE + TIME (ABSOLUTE CENTER FIX) */}
-          <div className="absolute left-1/2 transform -translate-x-1/2  text-center text-sm text-slate-800">
+          <div className="absolute hidden md:block left-1/2 transform -translate-x-1/2  text-center text-sm text-slate-800">
             <div className="flex items-center justify-center gap-2 text-base font-semibold">
               <Calendar size={16} />
               <span className="font-poppins">{formattedDate}</span>
@@ -95,17 +115,17 @@ export default function NewsNavbar() {
                 <Image
                   width={400}
                   height={400}
-                  src="/news01.jpg"
+                  src={mainNews?.featuredImage[0] || ""}
                   alt="news"
                   // fill
-                  className="object-cover w-20 h-16"
+                  className="object-cover w-40 h-16"
                 />
               </div>
 
               {/* TEXT */}
               <div className="flex flex-col">
                 <p className="text-sm font-bangla text-gray-700 line-clamp-2">
-                  ঢাকায় আসছে নারীদের জন্য বিশেষ বাস সার্ভিস চালু হচ্ছে
+                  {getTranslatedValue(mainNews?.title, lang)}
                 </p>
               </div>
             </div>

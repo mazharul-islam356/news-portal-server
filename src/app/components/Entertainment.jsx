@@ -72,11 +72,23 @@ export default function Entertainment() {
     );
   }
 
+  const t = {
+    readMore: {
+      en: "Entertainment",
+      bn: "বিনোদন",
+    },
+  };
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 py-10">
-        <h2 className="text-2xl w-fit mx-auto px-3 border-x font-bold text-center border-red-500 mb-8">
-          বিনোদন
+      <div className="max-w-7xl mx-auto px-4 py-5 md:py-10">
+        <h2 className="flex items-center justify-center gap-3 text-2xl font-bold text-center md:mb-8 mb-5">
+          <span className="w-2 h-2 bg-red-700 rounded-full"></span>
+
+          <span className="px-3 border-x border-red-700">
+            {t.readMore[lang]}
+          </span>
+
+          <span className="w-2 h-2 bg-red-700 rounded-full"></span>
         </h2>
 
         <div className="grid lg:grid-cols-4 gap-x-5">
@@ -84,11 +96,11 @@ export default function Entertainment() {
           <div className="lg:col-span-3 bg-white p-5 rounded shadow-sm">
             {mainNews && (
               <>
-                <h2 className="text-lg md:text-2xl font-semibold mb-3 text-ellipsis line-clamp-2">
+                <h2 className="text-xl md:text-2xl font-semibold mb-3 text-ellipsis line-clamp-2 text-center md:text-left">
                   {getTranslatedValue(mainNews?.title, lang)}
                 </h2>
 
-                <div className="w-full h-72">
+                <div className="w-full h-40 md:h-72">
                   <Image
                     src={mainNews?.featuredImage?.[0]}
                     width={400}
@@ -102,7 +114,7 @@ export default function Entertainment() {
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="space-y-4">
+          <div className="md:space-y-4 space-y-2">
             {sideNews.slice(0, 3).map((news, i) => (
               <div
                 key={i}
@@ -123,7 +135,7 @@ export default function Entertainment() {
           </div>
 
           {/* GRID BELOW */}
-          <div className="lg:col-span-4 grid md:grid-cols-4 gap-5 mt-4">
+          <div className="lg:col-span-4  md:grid-cols-4 gap-5 mt-4 hidden md:grid">
             {gridNews.map((news, i) => (
               <div key={i} className="bg-white p-3 rounded shadow-sm ">
                 <Image

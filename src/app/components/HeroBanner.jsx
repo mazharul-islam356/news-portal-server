@@ -45,8 +45,14 @@ export default function HeroSection() {
     fetchFeatured();
   }, []);
 
+  const t = {
+    readMore: {
+      en: "Read more →",
+      bn: "বিস্তারিত পড়ুন →",
+    },
+  };
   return (
-    <div className="grid max-w-7xl mx-auto grid-cols-1 lg:grid-cols-3 gap-6 font-bangla">
+    <div className="grid max-w-7xl mx-auto grid-cols-1 lg:grid-cols-3 gap-6">
       {/* LEFT: Featured */}
       <div className="lg:col-span-2 relative">
         <Swiper
@@ -59,7 +65,7 @@ export default function HeroSection() {
           loop={true}
           pagination={{ clickable: true }}
           // navigation={true}
-          className="rounded-md overflow-hidden"
+          className="md:rounded-md overflow-hidden"
         >
           {featured.map((item, index) => (
             <SwiperSlide key={index}>
@@ -69,7 +75,7 @@ export default function HeroSection() {
                   height={800}
                   alt={item.title.bn}
                   src={item.featuredImage[0]}
-                  className="w-full h-105 object-cover"
+                  className="w-full md:h-105 h-72 object-cover"
                 />
 
                 {/* overlay */}
@@ -83,7 +89,7 @@ export default function HeroSection() {
 
                   <Link href={`/news/${item._id}`}>
                     <span className="inline-block my-3 text-sm underline hover:text-blue-300 transition">
-                      বিস্তারিত পড়ুন →
+                      {t.readMore[lang]}
                     </span>
                   </Link>
                 </div>
@@ -94,16 +100,16 @@ export default function HeroSection() {
       </div>
 
       {/* RIGHT: Trending */}
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col md:gap-2 gap-0">
         {breaking?.slice(0, 4).map((item) => (
           <Link key={item?._id} href={`/news/${item._id}`}>
-            <div className="flex gap-3 group cursor-pointer bg-white border border-gray-100 rounded-lg p-2 hover:shadow-md transition">
+            <div className="flex gap-3 group cursor-pointer bg-white border border-gray-100 md:rounded-lg rounded-xs p-2 hover:shadow-md transition">
               <Image
                 width={500}
                 height={500}
                 alt={item.title.bn}
                 src={item.featuredImage[0]}
-                className="w-28 h-20 object-cover rounded-sm flex-shrink-0"
+                className="md:w-28 md:h-20 w-24 h-16 object-cover md:rounded-sm rounded-xs flex-shrink-0"
               />
 
               <div className="flex flex-col justify-center">

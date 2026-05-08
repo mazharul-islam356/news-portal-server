@@ -4,6 +4,7 @@ import Image from "next/image";
 import SectionHeader from "./SectionHeader";
 import { useLanguage } from "@/context/lagnguageContext";
 import { getTranslatedValue } from "@/hooks/getTranslatedValue";
+import Link from "next/link";
 
 export default function NewsSection({ title, data = [] }) {
   const { lang } = useLanguage();
@@ -23,18 +24,21 @@ export default function NewsSection({ title, data = [] }) {
         <div className="lg:col-span-2">
           {firstNews && (
             <div>
-              <div className="relative w-full h-[260px]">
-                <Image
-                  src={firstNews?.featuredImage?.[0]}
-                  alt={getTranslatedValue(firstNews?.title, lang)}
-                  fill
-                  className="object-cover rounded-md"
-                />
-              </div>
-
-              <h3 className="text-xl font-semibold mt-3 leading-snug">
-                {getTranslatedValue(firstNews?.title, lang)}
-              </h3>
+              <Link href={`/news/${firstNews?._id || "#"}`}>
+                <div className="relative w-full h-[260px]">
+                  <Image
+                    src={firstNews?.featuredImage?.[0]}
+                    alt={getTranslatedValue(firstNews?.title, lang)}
+                    fill
+                    className="object-cover rounded-md"
+                  />
+                </div>
+              </Link>
+              <Link href={`/news/${firstNews?._id || "#"}`}>
+                <h3 className="text-xl font-semibold mt-3 leading-snug">
+                  {getTranslatedValue(firstNews?.title, lang)}
+                </h3>
+              </Link>
 
               <p className="text-gray-600 mt-2 text-sm line-clamp-3">
                 {getTranslatedValue(firstNews?.content, lang)}
@@ -57,9 +61,11 @@ export default function NewsSection({ title, data = [] }) {
               </div>
 
               <div>
-                <h4 className="text-sm font-medium leading-snug">
-                  {getTranslatedValue(item?.title, lang)}
-                </h4>
+                <Link href={`/news/${item?._id || "#"}`}>
+                  <h4 className="text-sm text-ellipsis line-clamp-2 font-medium leading-snug">
+                    {getTranslatedValue(item?.content, lang)}
+                  </h4>
+                </Link>
 
                 <p className="text-xs text-gray-500 mt-1">{item?.time || ""}</p>
               </div>

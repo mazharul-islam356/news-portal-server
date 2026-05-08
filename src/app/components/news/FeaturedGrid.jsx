@@ -46,11 +46,11 @@ export default function FeaturedGrid() {
 
   return (
     <section className="bg-[#e9e3e3] py-8 mt-14">
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {data.map((item, index) => (
           <div
             key={item?._id || index}
-            className="relative h-32 rounded-xs overflow-hidden group"
+            className="relative md:h-32 h-20 rounded-xs overflow-hidden group"
           >
             {/* Background Image */}
             <Image

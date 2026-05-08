@@ -110,7 +110,7 @@ export default function NewsSection() {
       <div className="border-t my-5"></div>
 
       {/* ===== BOTTOM GRID (SMALL CARD) ===== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-gray-200">
+      <div className=" grid-cols-1 hidden md:grid md:grid-cols-2 lg:grid-cols-3 border border-gray-200">
         {smallNews.map((item, index) => (
           <div
             key={item?._id || index}

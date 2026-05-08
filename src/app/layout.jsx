@@ -1,12 +1,15 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "./context/CartContext";
-import { Inter } from "next/font/google";
+import { Inter, Noto_Sans_Bengali, Tiro_Bangla } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import { LanguageProvider } from "@/context/lagnguageContext";
+import FontWrapper from "@/FontWrapper";
+import Providers from "@/providers/Providers";
 
-const inter = Inter({
-  subsets: ["latin"],
+const inter = Inter({ subsets: ["latin"] });
+const tiroBangla = Tiro_Bangla({
+  subsets: ["bengali"],
+  weight: "400",
 });
 
 export const metadata = {
@@ -20,13 +23,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <LanguageProvider>
-          <TooltipProvider>
-            <Toaster richColors />
-            <CartProvider>{children}</CartProvider>
-          </TooltipProvider>
-        </LanguageProvider>
+      <body className={`${inter.className} ${tiroBangla.className}`}>
+        <TooltipProvider>
+          <Toaster richColors />
+          <CartProvider>
+            {" "}
+            <Providers>{children}</Providers>
+          </CartProvider>
+        </TooltipProvider>
       </body>
     </html>
   );

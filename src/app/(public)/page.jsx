@@ -25,26 +25,70 @@ export const categories = [
   { name: "Entertainment", slug: "entertainment" },
 ];
 
-export const banglaNewsHeadlines = [
+export const bangladeshNewsHeadlines = [
   {
     _id: "1",
-    slug: "news-1",
-    title_bn: "ঢাকায় নতুন মেট্রো রেল প্রকল্পের দ্বিতীয় ধাপ উদ্বোধন",
+    slug: "dhaka-smart-traffic-system",
+    title: {
+      bn: "ঢাকায় যানজট কমাতে নতুন স্মার্ট ট্রাফিক সিস্টেম চালু করা হয়েছে",
+      en: "New smart traffic system launched to reduce congestion in Dhaka",
+    },
   },
   {
     _id: "2",
-    slug: "news-2",
-    title_bn: "দেশে ইন্টারনেট সেবায় বড় আপগ্রেড আনা হচ্ছে",
+    slug: "padma-bridge-maintenance",
+    title: {
+      bn: "পদ্মা সেতুর রক্ষণাবেক্ষণে নতুন প্রযুক্তি ব্যবহার শুরু",
+      en: "New technology introduced for maintenance of Padma Bridge",
+    },
   },
   {
     _id: "3",
-    slug: "news-3",
-    title_bn: "জাতীয় ক্রিকেট লীগ আজ থেকে শুরু হয়েছে",
+    slug: "export-growth-bangladesh",
+    title: {
+      bn: "বাংলাদেশের রপ্তানি আয় গত বছরের তুলনায় ১২% বৃদ্ধি পেয়েছে",
+      en: "Bangladesh export earnings increased by 12% compared to last year",
+    },
   },
   {
     _id: "4",
-    slug: "news-4",
-    title_bn: "AI প্রযুক্তিতে বাংলাদেশের অগ্রগতি দ্রুত বাড়ছে",
+    slug: "digital-payment-growth",
+    title: {
+      bn: "দেশে ডিজিটাল পেমেন্ট ব্যবস্থার ব্যবহার দ্রুত বৃদ্ধি পাচ্ছে",
+      en: "Digital payment usage is rapidly increasing in Bangladesh",
+    },
+  },
+  {
+    _id: "5",
+    slug: "heavy-rain-warning",
+    title: {
+      bn: "আবহাওয়া অধিদপ্তর দেশের বিভিন্ন এলাকায় ভারী বৃষ্টির সতর্কতা জারি করেছে",
+      en: "Meteorological department issues heavy rainfall warning across several regions",
+    },
+  },
+  {
+    _id: "6",
+    slug: "digital-classroom-project",
+    title: {
+      bn: "সরকারি স্কুলগুলোতে ডিজিটাল ক্লাসরুম সম্প্রসারণ প্রকল্প চালু হয়েছে",
+      en: "Digital classroom expansion project launched in government schools",
+    },
+  },
+  {
+    _id: "7",
+    slug: "new-hospital-dhaka",
+    title: {
+      bn: "ঢাকায় নতুন বিশেষায়িত হাসপাতাল উদ্বোধনের প্রস্তুতি চলছে",
+      en: "Preparation underway to inaugurate a new specialized hospital in Dhaka",
+    },
+  },
+  {
+    _id: "8",
+    slug: "startup-investment-growth",
+    title: {
+      bn: "বাংলাদেশে স্টার্টআপ ইকোসিস্টেমে বিনিয়োগ বৃদ্ধি পাচ্ছে",
+      en: "Investment in Bangladesh startup ecosystem is increasing",
+    },
   },
 ];
 export default function HomePage() {

@@ -1,4 +1,6 @@
 "use client";
+
+import { useLanguage } from "@/context/lagnguageContext";
 import {
   Facebook,
   Twitter,
@@ -11,6 +13,61 @@ import {
 import Image from "next/image";
 
 export default function Footer() {
+  const { lang } = useLanguage();
+
+  const t = {
+    brandDesc: {
+      en: "Latest news, analysis, politics, entertainment and international updates in one place.",
+      bn: "বাংলাদেশের সর্বশেষ খবর, বিশ্লেষণ, রাজনীতি, বিনোদন ও আন্তর্জাতিক সংবাদ এক জায়গায়।",
+    },
+    categories: {
+      en: "Categories",
+      bn: "বিভাগসমূহ",
+    },
+    links: {
+      en: "Important Links",
+      bn: "গুরুত্বপূর্ণ লিংক",
+    },
+    contact: {
+      en: "Contact",
+      bn: "যোগাযোগ",
+    },
+    newsletter: {
+      en: "Subscribe to newsletter",
+      bn: "নিউজলেটার সাবস্ক্রাইব করুন",
+    },
+    emailPlaceholder: {
+      en: "Your email",
+      bn: "আপনার ইমেইল",
+    },
+    subscribe: {
+      en: "Subscribe",
+      bn: "সাবস্ক্রাইব",
+    },
+    location: {
+      en: "Dhaka, Bangladesh",
+      bn: "ঢাকা, বাংলাদেশ",
+    },
+    rights: {
+      en: "All rights reserved.",
+      bn: "সর্বস্বত্ব সংরক্ষিত।",
+    },
+    developedBy: {
+      en: "Developed by",
+      bn: "ডেভেলপ করেছে",
+    },
+  };
+
+  const categories = {
+    en: ["Politics", "Economy", "International", "Sports", "Entertainment"],
+    bn: ["রাজনীতি", "অর্থনীতি", "আন্তর্জাতিক", "খেলা", "বিনোদন"],
+  };
+
+  const links = {
+    en: ["About Us", "Contact", "Privacy Policy", "Terms"],
+    bn: ["আমাদের সম্পর্কে", "যোগাযোগ", "গোপনীয়তা নীতি", "শর্তাবলী"],
+  };
+
   return (
     <footer className="bg-white border-t mt-8">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -18,18 +75,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* BRAND */}
           <div>
-            <div>
-              <Image
-                src="/newsportalLogo.png"
-                width={400}
-                height={400}
-                alt="logo"
-                className="object-cover w-32"
-              />
-            </div>
+            <Image
+              src="/newsportalLogo.png"
+              width={400}
+              height={400}
+              alt="logo"
+              className="object-cover w-32"
+            />
+
             <p className="text-gray-600 mt-3 text-sm leading-relaxed">
-              বাংলাদেশের সর্বশেষ খবর, বিশ্লেষণ, রাজনীতি, বিনোদন ও আন্তর্জাতিক
-              সংবাদ এক জায়গায়।
+              {t.brandDesc[lang]}
             </p>
 
             {/* SOCIAL */}
@@ -44,46 +99,45 @@ export default function Footer() {
           {/* CATEGORIES */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              বিভাগসমূহ
+              {t.categories[lang]}
             </h3>
+
             <ul className="space-y-2 text-sm text-gray-600">
-              <li className="hover:text-red-800 cursor-pointer">রাজনীতি</li>
-              <li className="hover:text-red-800 cursor-pointer">অর্থনীতি</li>
-              <li className="hover:text-red-800 cursor-pointer">আন্তর্জাতিক</li>
-              <li className="hover:text-red-800 cursor-pointer">খেলা</li>
-              <li className="hover:text-red-800 cursor-pointer">বিনোদন</li>
+              {categories[lang].map((item, i) => (
+                <li key={i} className="hover:text-red-800 cursor-pointer">
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* QUICK LINKS */}
+          {/* LINKS */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              গুরুত্বপূর্ণ লিংক
+              {t.links[lang]}
             </h3>
+
             <ul className="space-y-2 text-sm text-gray-600">
-              <li className="hover:text-red-800 cursor-pointer">
-                আমাদের সম্পর্কে
-              </li>
-              <li className="hover:text-red-800 cursor-pointer">যোগাযোগ</li>
-              <li className="hover:text-red-800 cursor-pointer">
-                গোপনীয়তা নীতি
-              </li>
-              <li className="hover:text-red-800 cursor-pointer">শর্তাবলী</li>
+              {links[lang].map((item, i) => (
+                <li key={i} className="hover:text-red-800 cursor-pointer">
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* CONTACT + NEWSLETTER */}
+          {/* CONTACT */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              যোগাযোগ
+              {t.contact[lang]}
             </h3>
 
             <div className="space-y-2 text-sm text-gray-600">
               <p className="flex items-center gap-2">
-                <MapPin size={16} /> ঢাকা, বাংলাদেশ
+                <MapPin size={16} /> {t.location[lang]}
               </p>
               <p className="flex items-center gap-2">
-                <Phone size={16} /> +৮৮০ ১২৩৪-৫৬৭৮৯০
+                <Phone size={16} /> +880 1234-567890
               </p>
               <p className="flex items-center gap-2">
                 <Mail size={16} /> info@newstoday.com
@@ -92,18 +146,16 @@ export default function Footer() {
 
             {/* Newsletter */}
             <div className="mt-4">
-              <p className="text-sm text-gray-600 mb-2">
-                নিউজলেটার সাবস্ক্রাইব করুন
-              </p>
+              <p className="text-sm text-gray-600 mb-2">{t.newsletter[lang]}</p>
 
               <div className="flex">
                 <input
                   type="email"
-                  placeholder="আপনার ইমেইল"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:border-red-800 text-sm"
+                  placeholder={t.emailPlaceholder[lang]}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-l-sm focus:outline-none focus:border-red-800 text-sm"
                 />
-                <button className="bg-red-800 text-white px-4 rounded-r-md hover:bg-red-700 transition">
-                  সাবস্ক্রাইব
+                <button className="bg-red-800 text-white px-4 rounded-r-sm hover:bg-red-700 transition">
+                  {t.subscribe[lang]}
                 </button>
               </div>
             </div>
@@ -112,9 +164,12 @@ export default function Footer() {
 
         {/* BOTTOM */}
         <div className="border-t mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-3">
-          <p>© {new Date().getFullYear()} NewsToday. সর্বস্বত্ব সংরক্ষিত।</p>
           <p>
-            Developed by{" "}
+            © {new Date().getFullYear()} NewsToday. {t.rights[lang]}
+          </p>
+
+          <p>
+            {t.developedBy[lang]}{" "}
             <span className="text-red-800 font-medium">Your Company</span>
           </p>
         </div>

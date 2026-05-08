@@ -12,13 +12,34 @@ const StickyBottomNav = ({ categories }) => {
   const [value, setValue] = useState(new Date());
   const { lang, toggleLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+
+  const t = {
+    title: {
+      en: "Latest",
+      bn: "সর্বশেষ",
+    },
+  };
+
+  const c = {
+    title: {
+      en: "Calendar",
+      bn: "ক্যালেন্ডার",
+    },
+  };
+
+  const l = {
+    title: {
+      en: "Login",
+      bn: "লগইন",
+    },
+  };
   return (
     <div>
-      <nav className="flex items-center justify-between font-bangla">
+      <nav className="flex items-center justify-between md:mt-0 mt-4">
         {/* Desktop Menu */}
         <div className="hidden lg:flex flex-1 items-center gap-6 pl-3">
           <Link href="/" className="py-5 text-lg font-semibold text-red-700">
-            সর্বশেষ
+            {t.title[lang]}
           </Link>
 
           {categories.slice(0, 6).map((category) => (
@@ -45,7 +66,7 @@ const StickyBottomNav = ({ categories }) => {
               className="px-6 py-5 border-r border-gray-200 flex items-center gap-2 cursor-pointer hover:bg-gray-50"
             >
               <CalendarDays size={22} />
-              <span className="text-lg">ক্যালেন্ডার</span>
+              <span className="text-lg">{c.title[lang]}</span>
             </button>
 
             {/* Modal */}
@@ -89,7 +110,7 @@ const StickyBottomNav = ({ categories }) => {
 
           <button className="px-6 py-5 border-r border-gray-200 flex items-center gap-2 hover:bg-gray-50">
             <User size={22} />
-            <span className="text-lg">Login</span>
+            <span className="text-lg"> {l.title[lang]}</span>
           </button>
 
           <>
@@ -146,14 +167,67 @@ const StickyBottomNav = ({ categories }) => {
         </div>
 
         {/* Mobile Header */}
-        <div className="lg:hidden flex w-full items-center justify-between px-4 py-4">
-          <h1 className="text-3xl font-black">
-            প্রথম<span className="text-red-500">আ</span>লো
-          </h1>
+        <div className="lg:hidden flex w-full items-center justify-between px-4 ">
+          <Link href="/" className="flex items-center w-16">
+            <Image
+              src="/newsportalLogo.png"
+              alt="logo"
+              width={160}
+              height={160}
+            />
+          </Link>
 
-          <button onClick={() => setOpen(!open)}>
-            <Menu size={28} />
-          </button>
+          <>
+            {/* MENU BUTTON */}
+            <button
+              onClick={() => setIsOpen(true)}
+              className="px-6 cursor-pointer py-5 hover:bg-gray-50"
+            >
+              <Menu size={26} />
+            </button>
+
+            {/* OVERLAY */}
+            <div
+              onClick={() => setIsOpen(false)}
+              className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
+                isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+              }`}
+            />
+
+            {/* SIDEBAR */}
+            <div
+              className={`fixed top-0 right-0 h-full w-[300px] bg-white z-50 shadow-lg transform transition-transform duration-300 ${
+                isOpen ? "translate-x-0" : "translate-x-full"
+              }`}
+            >
+              {/* HEADER */}
+              <div className="flex items-center justify-between px-5 py-4 border-b">
+                <Image
+                  src="/newsportalLogo.png"
+                  alt="logo"
+                  width={120}
+                  height={120}
+                />
+                <button onClick={() => setIsOpen(false)}>
+                  <X size={24} />
+                </button>
+              </div>
+
+              {/* CATEGORY LIST */}
+              <div className="flex flex-col px-5 py-4 space-y-3">
+                {categories.map((category) => (
+                  <Link
+                    key={category.slug}
+                    href={`/category/${category.slug}`}
+                    onClick={() => setIsOpen(false)}
+                    className="py-3 text-lg font-medium text-black hover:text-red-500 transition border-b"
+                  >
+                    {getTranslatedValue(category.name, lang)}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </>
         </div>
       </nav>
     </div>

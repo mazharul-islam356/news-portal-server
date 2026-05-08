@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -10,25 +11,27 @@ export default function AdBanner({ imageUrl, link }) {
   if (!isVisible) return null;
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto my-6 h-20">
-      {/* Ad Image */}
-      <Link href={link || "#"} target="_blank" rel="noopener noreferrer">
-        <Image
-          width={500}
-          height={300}
-          src={imageUrl}
-          alt="Advertisement"
-          className="w-full h-20 object-cover"
-        />
-      </Link>
+    <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-0 my-4 sm:my-6">
+      {/* Banner Wrapper */}
+      <div className="relative w-full h-16 sm:h-20 md:h-24 lg:h-28 overflow-hidden shadow-sm">
+        {/* Clickable Ad */}
+        <Link href={link || "#"} target="_blank" rel="noopener noreferrer">
+          <Image
+            src={imageUrl || "/placeholder.jpg"}
+            alt="Advertisement"
+            fill
+            className="object-cover"
+          />
+        </Link>
 
-      {/* Close Button */}
-      <button
-        onClick={() => setIsVisible(false)}
-        className="absolute top-2 right-2 bg-red-700/70 hover:bg-red-700 cursor-pointer text-white rounded-full p-0.5 transition"
-      >
-        <X size={16} />
-      </button>
+        {/* Close Button */}
+        <button
+          onClick={() => setIsVisible(false)}
+          className="absolute top-2 right-2 bg-red-700/80 hover:bg-red-700 text-white rounded-full p-1 transition z-10"
+        >
+          <X size={16} />
+        </button>
+      </div>
     </div>
   );
 }
