@@ -84,7 +84,7 @@ export default function Entertainment() {
           <div className="lg:col-span-3 bg-white p-5 rounded shadow-sm">
             {mainNews && (
               <>
-                <h2 className="text-lg font-semibold mb-3">
+                <h2 className="text-lg md:text-2xl font-semibold mb-3 text-ellipsis line-clamp-2">
                   {getTranslatedValue(mainNews?.title, lang)}
                 </h2>
 
@@ -103,19 +103,19 @@ export default function Entertainment() {
 
           {/* RIGHT SIDE */}
           <div className="space-y-4">
-            {sideNews.map((news, i) => (
+            {sideNews.slice(0, 3).map((news, i) => (
               <div
                 key={i}
-                className="flex gap-3 bg-white p-3 rounded shadow-sm"
+                className="flex gap-3 bg-white p-3 rounded shadow-sm h-28"
               >
                 <Image
                   src={news?.featuredImage?.[0]}
                   width={100}
                   height={70}
                   alt=""
-                  className="rounded object-cover"
+                  className="rounded-sm object-cover"
                 />
-                <p className="text-sm">
+                <p className="text-sm text-ellipsis line-clamp-2">
                   {getTranslatedValue(news?.title, lang)}
                 </p>
               </div>
@@ -125,15 +125,15 @@ export default function Entertainment() {
           {/* GRID BELOW */}
           <div className="lg:col-span-4 grid md:grid-cols-4 gap-5 mt-4">
             {gridNews.map((news, i) => (
-              <div key={i} className="bg-white p-3 rounded shadow-sm">
+              <div key={i} className="bg-white p-3 rounded shadow-sm ">
                 <Image
                   src={news?.featuredImage?.[0]}
                   width={300}
                   height={180}
-                  className="rounded w-full object-cover"
+                  className="rounded-sm h-44 w-full object-cover"
                   alt=""
                 />
-                <h4 className="text-sm font-medium mt-2">
+                <h4 className="text-sm text-ellipsis line-clamp-1 font-medium mt-3">
                   {getTranslatedValue(news?.title, lang)}
                 </h4>
               </div>

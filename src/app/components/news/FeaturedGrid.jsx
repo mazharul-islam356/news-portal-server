@@ -1,61 +1,84 @@
-// components/FeaturedGrid.jsx
-import Image from "next/image";
+"use client";
 
-const data = [
-  {
-    id: 1,
-    title: "রোহিঙ্গায় বিনা মূল্যে বাংলাদেশি শিক্ষার্থীদের কোচ করার সুযোগ",
-    category: "শিক্ষা",
-    image: "/news01.jpg",
-  },
-  {
-    id: 2,
-    title: "নতুন কৌশলে ৩০ হাজার ফেসবুক অ্যাকাউন্ট হ্যাক করে অনলাইনে বিক্রি",
-    category: "প্রযুক্তি",
-    image: "/news02.jpg",
-  },
-  {
-    id: 3,
-    title: "আল্লাহর উপর ভরসা করা কেন ঈমানের অপরিহার্য অংশ",
-    category: "ধর্ম",
-    image: "/news03.jpg",
-  },
-  {
-    id: 4,
-    title: "শত শত মারিনরা মরছে...",
-    category: "একটু ঘুরুন",
-    image: "/news04.jpg",
-  },
-];
+// components/FeaturedGrid.jsx
+
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getNewsByCategory } from "@/service/newsApi";
+import { useLanguage } from "@/context/lagnguageContext";
+import { getTranslatedValue } from "@/hooks/getTranslatedValue";
 
 export default function FeaturedGrid() {
+  const { lang } = useLanguage();
+
+  const [entertainment, setEntertainment] = useState([]);
+  const [business, setBusiness] = useState([]);
+  const [corruption, setCorruption] = useState([]);
+  const [world, setWorld] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [entertainmentData, businessData, corruptionData, worldData] =
+          await Promise.all([
+            getNewsByCategory("entertainment", "en"),
+            getNewsByCategory("business", "en"),
+            getNewsByCategory("corruption", "en"),
+            getNewsByCategory("world", "en"),
+          ]);
+
+        setEntertainment(entertainmentData?.data || []);
+        setBusiness(businessData?.data || []);
+        setCorruption(corruptionData?.data || []);
+        setWorld(worldData?.data || []);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // prottek category theke first news
+  const data = [entertainment[0], business[0], corruption[0], world[0]].filter(
+    Boolean,
+  );
+
   return (
     <section className="bg-[#e9e3e3] py-8 mt-14">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {data.map((item) => (
+        {data.map((item, index) => (
           <div
-            key={item.id}
+            key={item?._id || index}
             className="relative h-32 rounded-xs overflow-hidden group"
           >
             {/* Background Image */}
             <Image
-              src={item.image}
-              alt={item.title}
+              src={item?.featuredImage[0]}
+              alt={
+                typeof item?.description === "object"
+                  ? item?.description?.[lang]
+                  : item?.description
+              }
               fill
               className="object-cover group-hover:scale-105 transition duration-300"
             />
 
-            {/* Dark Overlay */}
+            {/* Overlay */}
             <div className="absolute inset-0 bg-black/40"></div>
 
             {/* Content */}
             <div className="absolute inset-0 p-4 flex flex-col justify-end">
+              {/* Category */}
               <span className="text-yellow-400 text-sm font-semibold mb-1">
-                {item.category}
+                {typeof item?.category === "object"
+                  ? item?.category?.[lang]
+                  : item?.category}
               </span>
 
-              <h3 className="text-white text-sm leading-snug font-medium">
-                {item.title}
+              {/* Description */}
+              <h3 className="text-white text-sm leading-snug font-medium line-clamp-2">
+                {getTranslatedValue(item?.content, lang)}
               </h3>
             </div>
           </div>

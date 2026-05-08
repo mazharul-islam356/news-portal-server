@@ -113,7 +113,7 @@ export default function World() {
                     width={600}
                     height={350}
                     alt={getTranslatedValue(featured?.title, lang)}
-                    className="rounded w-full h-64 object-cover"
+                    className="rounded w-full h-52 object-cover"
                   />
 
                   <div className="absolute top-3 left-3 bg-red-600 p-2 rounded-full text-white">
@@ -125,7 +125,7 @@ export default function World() {
                   {getTranslatedValue(featured?.title, lang)}
                 </h2>
 
-                <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+                <p className="text-sm text-gray-600 mt-2 line-clamp-2">
                   {getTranslatedValue(featured?.content, lang)}
                 </p>
 

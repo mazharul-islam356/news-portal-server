@@ -1,48 +1,53 @@
-// components/ForYouSection.jsx
-import Image from "next/image";
+"use client";
 
-const newsData = [
-  {
-    id: 1,
-    title: "‘ষড়’ হচ্ছে জনগণের প্রতিক্রিয়া: আইনমন্ত্রী",
-    desc: "আইনমন্ত্রী বলেন, ষড় যদি না সিস্টেমেটিক ভাবে ওয়েবসাইটে...",
-    time: "১৬ ঘণ্টা আগে",
-    image: "/news01.jpg",
-    highlight: false,
-  },
-  {
-    id: 2,
-    title: "সংরক্ষিত নারী আসন • সমতার ভারসাম্য...",
-    desc: "নির্বাচন কমিশনার আব্দুর রহমান...",
-    time: "১৩ ঘণ্টা আগে",
-    image: "/news02.jpg",
-    highlight: true,
-  },
-  {
-    id: 3,
-    title: "বিজেপিতে যোগ দিলেই রাহুল গান্ধীকে বিয়ে!",
-    desc: "অভিনেত্রী কঙ্গনা বলেন...",
-    time: "১৭ ঘণ্টা আগে",
-    image: "/news03.jpg",
-    highlight: false,
-  },
-  {
-    id: 4,
-    title: "অভিজ্ঞ- বিশ্লেষণ • খালাপতি বিজয়",
-    desc: "তামিলনাড়ুর মধ্যে খালাপতির...",
-    time: "১৬ ঘণ্টা আগে",
-    image: "/news04.jpg",
-    highlight: true,
-  },
-];
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getNewsByCategory } from "@/service/newsApi";
+import { getTranslatedValue } from "@/hooks/getTranslatedValue";
+import { useLanguage } from "@/context/lagnguageContext";
 
 export default function ForYouSection() {
+  const [entertainment, setEntertainment] = useState([]);
+  const [business, setBusiness] = useState([]);
+  const [corruption, setCorruption] = useState([]);
+  const [world, setWorld] = useState([]);
+  const { lang } = useLanguage();
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [e, b, c, w] = await Promise.all([
+          getNewsByCategory("entertainment", "en"),
+          getNewsByCategory("business", "en"),
+          getNewsByCategory("politics", "en"),
+          getNewsByCategory("world", "en"),
+        ]);
+
+        setEntertainment(e?.data || []);
+        setBusiness(b?.data || []);
+        setCorruption(c?.data || []);
+        setWorld(w?.data || []);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // প্রতিটা category থেকে index 3 (4th news)
+  const newsData = [
+    entertainment[3],
+    business[3],
+    corruption[3],
+    world[3],
+  ].filter(Boolean);
+
   return (
-    <section className=" pt-10">
+    <section className="pt-10">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-2 mb-4">
-          <h2 className="text-2xl border-b-2  border-red-700 font-semibold">
+          <h2 className="text-2xl border-b-2 border-red-700 font-semibold">
             আপনার জন্য
           </h2>
         </div>
@@ -50,36 +55,30 @@ export default function ForYouSection() {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {newsData.map((item, index) => (
-            <div key={item.id} className="relative bg-white p-4">
-              {/* Vertical Separator */}
-              {index !== newsData.length - 1 && (
-                <div className="hidden lg:block absolute top-4 right-[-12px] w-px h-[calc(100%-2rem)] bg-gray-300"></div>
-              )}
-
+            <div key={item?._id || index} className="relative bg-white p-4">
               {/* Image */}
               <div className="relative w-full h-44 mb-3">
                 <Image
-                  src={item.image}
-                  alt={item.title}
+                  src={item?.featuredImage?.[0]}
+                  alt={item?.title}
                   fill
                   className="object-cover"
                 />
               </div>
 
               {/* Title */}
-              <h3
-                className={`text-sm font-semibold mb-2 leading-snug ${
-                  item.highlight ? "text-red-600" : "text-black"
-                }`}
-              >
-                {item.title}
+              <h3 className="text-sm font-semibold mb-2 leading-snug text-black">
+                {item?.title?.[lang]}
               </h3>
 
               {/* Description */}
-              <p className="text-gray-600 text-sm mb-2">{item.desc}</p>
-
+              <p className="text-gray-600 text-sm mb-2 text-ellipsis line-clamp-3">
+                {item?.content?.[lang]}
+              </p>
               {/* Time */}
-              <span className="text-xs text-gray-400">{item.time}</span>
+              <span className="text-xs text-gray-400">
+                {/* {item?.time || "just now"} */} just now
+              </span>
             </div>
           ))}
         </div>

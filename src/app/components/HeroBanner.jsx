@@ -81,7 +81,7 @@ export default function HeroSection() {
                     {getTranslatedValue(item.title, lang)}
                   </h1>
 
-                  <Link href={`/news/${item.slug}`}>
+                  <Link href={`/news/${item._id}`}>
                     <span className="inline-block my-3 text-sm underline hover:text-blue-300 transition">
                       বিস্তারিত পড়ুন →
                     </span>
@@ -96,7 +96,7 @@ export default function HeroSection() {
       {/* RIGHT: Trending */}
       <div className="flex flex-col gap-2.5">
         {breaking?.slice(0, 4).map((item) => (
-          <Link key={item._id} href={`/news/${item.slug}`}>
+          <Link key={item?._id} href={`/news/${item._id}`}>
             <div className="flex gap-3 group cursor-pointer bg-white border border-gray-100 rounded-lg p-2 hover:shadow-md transition">
               <Image
                 width={500}
