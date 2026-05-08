@@ -170,7 +170,7 @@ export default function Footer() {
 
           <p>
             {t.developedBy[lang]}{" "}
-            <span className="text-red-800 font-medium">Your Company</span>
+            <span className="text-red-800 font-medium">Mazharul Islam</span>
           </p>
         </div>
       </div>

@@ -13,7 +13,7 @@ const tiroBangla = Tiro_Bangla({
 });
 
 export const metadata = {
-  title: "News Portal",
+  title: "Nirvoy Barta",
   description: "A Bangladeshi news portal",
   icons: {
     icon: "/newsportal.png",
