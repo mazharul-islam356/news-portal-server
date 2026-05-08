@@ -56,15 +56,10 @@ export default function HeroSection() {
       {/* LEFT: Featured */}
       <div className="lg:col-span-2 relative">
         <Swiper
-          modules={[
-            // Autoplay,
-            Pagination,
-            Navigation,
-          ]}
+          modules={[Autoplay, Pagination, Navigation]}
           autoplay={{ delay: 4000 }}
           loop={true}
           pagination={{ clickable: true }}
-          // navigation={true}
           className="md:rounded-md overflow-hidden"
         >
           {featured.map((item, index) => (
@@ -75,7 +70,7 @@ export default function HeroSection() {
                   height={800}
                   alt={item.title.bn}
                   src={item.featuredImage[0]}
-                  className="w-full md:h-105 h-72 object-cover"
+                  className="w-full md:h-105 h-60 object-cover"
                 />
 
                 {/* overlay */}

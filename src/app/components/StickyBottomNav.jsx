@@ -177,57 +177,67 @@ const StickyBottomNav = ({ categories }) => {
             />
           </Link>
 
-          <>
-            {/* MENU BUTTON */}
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => setIsOpen(true)}
-              className="px-6 cursor-pointer py-5 hover:bg-gray-50"
+              onClick={toggleLanguage}
+              className="border-r border-gray-200 flex items-center gap-1 mb-2 hover:bg-gray-50 cursor-pointer"
             >
-              <Menu size={26} />
+              <Globe size={18} />
+              <span className="text-sm">{lang === "en" ? "বাং" : "En"}</span>
             </button>
 
-            {/* OVERLAY */}
-            <div
-              onClick={() => setIsOpen(false)}
-              className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
-                isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-              }`}
-            />
+            <div>
+              {/* MENU BUTTON */}
+              <button
+                onClick={() => setIsOpen(true)}
+                className="px-2 cursor-pointer hover:bg-gray-50"
+              >
+                <Menu size={22} />
+              </button>
 
-            {/* SIDEBAR */}
-            <div
-              className={`fixed top-0 right-0 h-full w-[300px] bg-white z-50 shadow-lg transform transition-transform duration-300 ${
-                isOpen ? "translate-x-0" : "translate-x-full"
-              }`}
-            >
-              {/* HEADER */}
-              <div className="flex items-center justify-between px-5 py-4 border-b">
-                <Image
-                  src="/newsportalLogo.png"
-                  alt="logo"
-                  width={120}
-                  height={120}
-                />
-                <button onClick={() => setIsOpen(false)}>
-                  <X size={24} />
-                </button>
-              </div>
+              {/* OVERLAY */}
+              <div
+                onClick={() => setIsOpen(false)}
+                className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
+                  isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+                }`}
+              />
 
-              {/* CATEGORY LIST */}
-              <div className="flex flex-col px-5 py-4 space-y-3">
-                {categories.map((category) => (
-                  <Link
-                    key={category.slug}
-                    href={`/category/${category.slug}`}
-                    onClick={() => setIsOpen(false)}
-                    className="py-3 text-lg font-medium text-black hover:text-red-500 transition border-b"
-                  >
-                    {getTranslatedValue(category.name, lang)}
-                  </Link>
-                ))}
+              {/* SIDEBAR */}
+              <div
+                className={`fixed top-0 right-0 h-full w-[300px] bg-white z-50 shadow-lg transform transition-transform duration-300 ${
+                  isOpen ? "translate-x-0" : "translate-x-full"
+                }`}
+              >
+                {/* HEADER */}
+                <div className="flex items-center justify-between px-5 py-4 border-b">
+                  <Image
+                    src="/newsportalLogo.png"
+                    alt="logo"
+                    width={100}
+                    height={100}
+                  />
+                  <button onClick={() => setIsOpen(false)}>
+                    <X size={24} />
+                  </button>
+                </div>
+
+                {/* CATEGORY LIST */}
+                <div className="flex flex-col px-5 py-4 space-y-3">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.slug}
+                      href={`/category/${category.slug}`}
+                      onClick={() => setIsOpen(false)}
+                      className="py-3 text-lg font-medium text-black hover:text-red-500 transition border-b"
+                    >
+                      {getTranslatedValue(category.name, lang)}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-          </>
+          </div>
         </div>
       </nav>
     </div>

@@ -11,37 +11,63 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Image from "next/image";
 
+const categories = [
+  { bn: "বাংলাদেশ", en: "Bangladesh" },
+  { bn: "বিশ্ব", en: "World" },
+  { bn: "আন্তর্জাতিক", en: "International" },
+  { bn: "রাজনীতি", en: "Politics" },
+  { bn: "মতামত", en: "Opinion" },
+  { bn: "জাতীয়", en: "National" },
+  { bn: "বাণিজ্য", en: "Business" },
+  { bn: "অর্থনীতি", en: "Economy" },
+  { bn: "প্রযুক্তি", en: "Technology" },
+  { bn: "বিজ্ঞান", en: "Science" },
+  { bn: "খেলা", en: "Sports" },
+  { bn: "বিনোদন", en: "Entertainment" },
+  { bn: "লাইফস্টাইল", en: "Lifestyle" },
+  { bn: "শিক্ষা", en: "Education" },
+  { bn: "চাকরি", en: "Jobs" },
+  { bn: "ধর্ম", en: "Religion" },
+  { bn: "দুর্নীতি", en: "corruption" },
+  { bn: "স্বাস্থ্য", en: "Health" },
+  { bn: "পরিবেশ", en: "Environment" },
+  { bn: "অপরাধ", en: "Crime" },
+  { bn: "আইন ও আদালত", en: "Law & Court" },
+  { bn: "গণমাধ্যম", en: "Media" },
+  { bn: "প্রবাস", en: "Diaspora" },
+];
+
 export default function EditNews() {
   const { id } = useParams();
-  const categories = [
-    { en: "Politics", bn: "রাজনীতি" },
-    { en: "Sports", bn: "খেলাধুলা" },
-    { en: "Technology", bn: "প্রযুক্তি" },
-    { en: "Business", bn: "ব্যবসা" },
-    { en: "Entertainment", bn: "বিনোদন" },
-    { en: "International", bn: "আন্তর্জাতিক" },
-  ];
+  const router = useRouter();
+
   const [form, setForm] = useState({
     title_bn: "",
     title_en: "",
-    summary_bn: "",
-    summary_en: "",
     content_bn: "",
     content_en: "",
-    slug: "",
-    category: "",
-    tags: "",
-    status: "draft",
+    writer_bn: "",
+    writer_en: "",
     publishedAt: "",
-    isBreaking: 1,
-    isTrending: 1,
-    isFeatured: 1,
+    status: "draft",
+    tags: "",
+    category_en: "",
+    category_bn: "",
+    isBreaking: 0,
+    isBreakingTop: 0,
+    isLatest: 0,
+    isTrending: 0,
+    isFeatured: 0,
   });
 
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState("");
-  const router = useRouter();
-  // ✅ FETCH DATA
+  const [files, setFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+  // FETCH DATA
   useEffect(() => {
     if (!id) return;
 
@@ -53,37 +79,46 @@ export default function EditNews() {
 
         const data = res.data;
 
+        // Handle featuredImage (could be array or string)
+        let existingImagesArray = [];
+        if (data.featuredImage) {
+          if (Array.isArray(data.featuredImage)) {
+            existingImagesArray = data.featuredImage;
+          } else {
+            existingImagesArray = [data.featuredImage];
+          }
+        }
+        setExistingImages(existingImagesArray);
+
         setForm({
           title_bn: data.title?.bn || "",
           title_en: data.title?.en || "",
-          summary_bn: data.summary?.bn || "",
-          summary_en: data.summary?.en || "",
           content_bn: data.content?.bn || "",
           content_en: data.content?.en || "",
-          slug: data.slug || "",
-          category: data.category || "",
-          tags: data.tags?.join(", ") || "",
-          status: data.status || "draft",
+          writer_bn: data.writer?.bn || "",
+          writer_en: data.writer?.en || "",
           publishedAt: data.publishedAt
             ? new Date(data.publishedAt).toISOString().slice(0, 16)
             : "",
-
-          // NEW FLAGS
-          isBreaking: data.isBreaking ?? 1,
-          isTrending: data.isTrending ?? 1,
-          isFeatured: data.isFeatured ?? 1,
+          status: data.status || "draft",
+          tags: data.tags?.join(", ") || "",
+          category_en: data.category?.en || "",
+          category_bn: data.category?.bn || "",
+          isBreaking: data.isBreaking ?? 0,
+          isBreakingTop: data.isBreakingTop ?? 0,
+          isLatest: data.isLatest ?? 0,
+          isTrending: data.isTrending ?? 0,
+          isFeatured: data.isFeatured ?? 0,
         });
-
-        setPreview(data.featuredImage || "");
       } catch (err) {
         console.error(err);
+        toast.error("Failed to fetch news data");
       }
     };
 
     fetchSingle();
   }, [id]);
 
-  // ✅ INPUT CHANGE
   const handleChange = (e) => {
     setForm((prev) => ({
       ...prev,
@@ -91,260 +126,394 @@ export default function EditNews() {
     }));
   };
 
-  // ✅ IMAGE CHANGE
-  const handleImageChange = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
 
-    setImage(file);
-    setPreview(URL.createObjectURL(file));
+    files.forEach((file) => {
+      setFiles((prev) => [...prev, file]);
+      setPreviews((prev) => [...prev, URL.createObjectURL(file)]);
+    });
+
+    e.target.value = null;
   };
 
-  // ✅ UPDATE
+  const handleRemoveImage = (
+    index,
+    isExisting = false,
+    existingIndex = null,
+  ) => {
+    if (isExisting && existingIndex !== null) {
+      setExistingImages((prev) => prev.filter((_, i) => i !== existingIndex));
+    } else {
+      setFiles((prev) => prev.filter((_, i) => i !== index));
+      setPreviews((prev) => prev.filter((_, i) => i !== index));
+    }
+  };
+
   const handleUpdate = async () => {
     try {
+      setLoading(true);
+
       const data = new FormData();
 
       Object.entries(form).forEach(([key, value]) => {
-        data.append(key, value);
+        if (value !== null && value !== undefined && value !== "") {
+          data.append(key, value);
+        }
       });
 
-      if (image) {
-        data.append("images", image); // must match multer
-      }
+      // Append existing images to keep them
+      existingImages.forEach((img) => {
+        data.append("existingImages", img);
+      });
+
+      // Append new images
+      files.forEach((file) => {
+        data.append("images", file);
+      });
 
       await api.patch(`${process.env.NEXT_PUBLIC_API_URL}/news/${id}`, data, {
-        ...authHeader,
         headers: {
-          ...authHeader.headers,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
 
-      toast.success("Updated successfully");
+      toast.success("News updated successfully");
       router.push("/admin/news");
     } catch (err) {
       console.error(err);
-      toast.error("Update failed");
+      toast.error("Error updating news");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Edit News</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* LEFT */}
-        <div className="md:col-span-2 space-y-5">
+        <div className="md:col-span-3 space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* TITLE */}
-            <div>
-              <label className="text-sm">Title (Bangla)</label>
-              <Input
-                name="title_bn"
-                value={form.title_bn}
-                onChange={handleChange}
-              />
-            </div>
+            <Input
+              name="title_bn"
+              value={form.title_bn}
+              onChange={handleChange}
+              placeholder="Title (Bangla)"
+            />
+            <Input
+              name="title_en"
+              value={form.title_en}
+              onChange={handleChange}
+              placeholder="Title (English)"
+            />
 
-            <div>
-              <label className="text-sm">Title (English)</label>
-              <Input
-                name="title_en"
-                value={form.title_en}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* SUMMARY */}
-            <div>
-              <label className="text-sm">Summary (BN)</label>
-              <Textarea
-                name="summary_bn"
-                value={form.summary_bn}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div>
-              <label className="text-sm">Summary (EN)</label>
-              <Textarea
-                name="summary_en"
-                value={form.summary_en}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* CONTENT */}
-            <div>
-              <label className="text-sm">Content (BN)</label>
-              <Textarea
-                rows={6}
-                name="content_bn"
-                value={form.content_bn}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div>
-              <label className="text-sm">Content (EN)</label>
-              <Textarea
-                rows={6}
-                name="content_en"
-                value={form.content_en}
-                onChange={handleChange}
-              />
-            </div>
+            <Textarea
+              rows={6}
+              name="content_bn"
+              value={form.content_bn}
+              onChange={handleChange}
+              placeholder="Content (Bangla)"
+            />
+            <Textarea
+              rows={6}
+              name="content_en"
+              value={form.content_en}
+              onChange={handleChange}
+              placeholder="Content (English)"
+            />
           </div>
         </div>
 
         {/* RIGHT */}
-        <div className="space-y-4">
-          <div className="border p-4 space-y-4 rounded-sm">
-            <h2 className="text-sm font-semibold">News Flags</h2>
+        <div className="border p-4 col-span-1 rounded-sm bg-gray-50 space-y-3">
+          <input
+            type="file"
+            id="img"
+            className="hidden"
+            multiple
+            onChange={handleFileChange}
+          />
 
-            {/* BREAKING */}
-            <div className="flex justify-between text-sm">
-              <span>Breaking</span>
-              <div className="flex gap-3">
-                <label>
-                  <input
-                    type="radio"
-                    checked={form.isBreaking === 0}
-                    onChange={() => setForm((p) => ({ ...p, isBreaking: 0 }))}
-                  />
-                  Yes
-                </label>
+          <label
+            htmlFor="img"
+            className="block border border-dashed p-4 text-center cursor-pointer text-sm"
+          >
+            Upload images
+          </label>
 
-                <label>
-                  <input
-                    type="radio"
-                    checked={form.isBreaking === 1}
-                    onChange={() => setForm((p) => ({ ...p, isBreaking: 1 }))}
-                  />
-                  No
-                </label>
+          {/* Existing Images */}
+          {existingImages.length > 0 && (
+            <div>
+              <p className="text-xs text-gray-600 mb-2">Current Images:</p>
+              <div className="grid grid-cols-2 gap-2">
+                {existingImages.map((img, i) => (
+                  <div key={`existing-${i}`} className="relative">
+                    <Image
+                      alt="news_image"
+                      width={500}
+                      height={500}
+                      src={img}
+                      className="h-20 w-full object-cover rounded-sm border"
+                    />
+                    <button
+                      onClick={() => handleRemoveImage(i, true, i)}
+                      className="absolute top-1 right-1 text-xs bg-red-500 text-white px-2 rounded-sm"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
+          )}
 
-            {/* TRENDING */}
-            <div className="flex justify-between text-sm">
-              <span>Trending</span>
-              <div className="flex gap-3">
-                <label>
-                  <input
-                    type="radio"
-                    checked={form.isTrending === 0}
-                    onChange={() => setForm((p) => ({ ...p, isTrending: 0 }))}
-                  />
-                  Yes
-                </label>
-
-                <label>
-                  <input
-                    type="radio"
-                    checked={form.isTrending === 1}
-                    onChange={() => setForm((p) => ({ ...p, isTrending: 1 }))}
-                  />
-                  No
-                </label>
+          {/* New Images Preview */}
+          {previews.length > 0 && (
+            <div>
+              <p className="text-xs text-gray-600 mb-2">New Images:</p>
+              <div className="grid grid-cols-2 gap-2">
+                {previews.map((img, i) => (
+                  <div key={`new-${i}`} className="relative">
+                    <Image
+                      alt="news_image"
+                      width={500}
+                      height={500}
+                      src={img}
+                      className="h-20 w-full object-cover rounded-sm border"
+                    />
+                    <button
+                      onClick={() => handleRemoveImage(i)}
+                      className="absolute top-1 right-1 text-xs bg-red-500 text-white px-2 rounded-sm"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
-
-            {/* FEATURED */}
-            <div className="flex justify-between text-sm">
-              <span>Featured</span>
-              <div className="flex gap-3">
-                <label>
-                  <input
-                    type="radio"
-                    checked={form.isFeatured === 0}
-                    onChange={() => setForm((p) => ({ ...p, isFeatured: 0 }))}
-                  />
-                  Yes
-                </label>
-
-                <label>
-                  <input
-                    type="radio"
-                    checked={form.isFeatured === 1}
-                    onChange={() => setForm((p) => ({ ...p, isFeatured: 1 }))}
-                  />
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-          <div className="border p-4 space-y-3 rounded-sm">
-            <div>
-              <label className="text-sm">Slug</label>
-              <Input name="slug" value={form.slug} onChange={handleChange} />
-            </div>
-
-            <div>
-              <label className="text-sm">Status</label>
-              <select
-                name="status"
-                value={form.status}
-                onChange={handleChange}
-                className="w-full border px-3 py-2 text-sm"
-              >
-                <option value="draft">Draft</option>
-                <option value="published">Publish</option>
-                <option value="scheduled">Schedule</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-sm">Publish Date</label>
-              <Input
-                type="datetime-local"
-                name="publishedAt"
-                value={form.publishedAt}
-                onChange={handleChange}
-              />
-            </div>
-
-            <select
-              name="category"
-              value={form.category}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 text-sm rounded-sm"
-            >
-              <option value="">Select category</option>
-
-              {categories.map((c) => (
-                <option key={c.en} value={c.en}>
-                  {c.bn}
-                </option>
-              ))}
-            </select>
-
-            <div>
-              <label className="text-sm">Tags</label>
-              <Input name="tags" value={form.tags} onChange={handleChange} />
-            </div>
-          </div>
-
-          {/* IMAGE */}
-          <div className="border p-4 space-y-3">
-            <input type="file" onChange={handleImageChange} />
-
-            {preview && (
-              <Image
-                width={500}
-                height={500}
-                alt="update-news"
-                src={preview}
-                className="w-full h-40 object-cover border"
-              />
-            )}
-          </div>
+          )}
         </div>
       </div>
 
-      <Button onClick={handleUpdate} className="w-full py-5 cursor-pointer">
-        Update News
+      <div className="space-y-4 grid grid-cols-2 gap-x-4">
+        <div className="border p-4 rounded-sm space-y-4">
+          <h2 className="text-sm font-semibold">News Flags</h2>
+
+          {/* Breaking Top */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Breaking Top</span>
+            <div className="flex gap-3 text-sm">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isBreakingTop"
+                  checked={form.isBreakingTop === 1}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreakingTop: 1 }))
+                  }
+                />
+                <span className="ml-1">Yes</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isBreakingTop"
+                  checked={form.isBreakingTop === 0}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreakingTop: 0 }))
+                  }
+                />
+                <span className="ml-1">No</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Breaking */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Breaking</span>
+            <div className="flex gap-3 text-sm">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isBreaking"
+                  checked={form.isBreaking === 1}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreaking: 1 }))
+                  }
+                />
+                <span className="ml-1">Yes</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isBreaking"
+                  checked={form.isBreaking === 0}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isBreaking: 0 }))
+                  }
+                />
+                <span className="ml-1">No</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Latest */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Latest News</span>
+            <div className="flex gap-3 text-sm">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isLatest"
+                  checked={form.isLatest === 1}
+                  onChange={() => setForm((prev) => ({ ...prev, isLatest: 1 }))}
+                />
+                <span className="ml-1">Yes</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isLatest"
+                  checked={form.isLatest === 0}
+                  onChange={() => setForm((prev) => ({ ...prev, isLatest: 0 }))}
+                />
+                <span className="ml-1">No</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Trending */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Trending</span>
+            <div className="flex gap-3 text-sm">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isTrending"
+                  checked={form.isTrending === 1}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isTrending: 1 }))
+                  }
+                />
+                <span className="ml-1">Yes</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isTrending"
+                  checked={form.isTrending === 0}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isTrending: 0 }))
+                  }
+                />
+                <span className="ml-1">No</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Featured */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">Featured</span>
+            <div className="flex gap-3 text-sm">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isFeatured"
+                  checked={form.isFeatured === 1}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isFeatured: 1 }))
+                  }
+                />
+                <span className="ml-1">Yes</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="isFeatured"
+                  checked={form.isFeatured === 0}
+                  onChange={() =>
+                    setForm((prev) => ({ ...prev, isFeatured: 0 }))
+                  }
+                />
+                <span className="ml-1">No</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="border p-4 space-y-3 rounded-sm">
+          {/* writer names */}
+          <div className="flex items-center gap-2">
+            <Input
+              name="writer_bn"
+              value={form.writer_bn}
+              onChange={handleChange}
+              placeholder="Writer Name (Bangla)"
+            />
+            <Input
+              name="writer_en"
+              value={form.writer_en}
+              onChange={handleChange}
+              placeholder="Writer Name (English)"
+            />
+          </div>
+
+          {/* STATUS */}
+          <select
+            name="status"
+            value={form.status}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 text-sm rounded-sm"
+          >
+            <option value="draft">Draft</option>
+            <option value="published">Publish Now</option>
+            <option value="scheduled">Schedule</option>
+          </select>
+
+          {/* PUBLISH DATE */}
+          <Input
+            type="datetime-local"
+            name="publishedAt"
+            value={form.publishedAt}
+            onChange={handleChange}
+          />
+
+          {/* CATEGORY */}
+          <select
+            value={form.category_en}
+            onChange={(e) => {
+              const selected = categories.find((c) => c.en === e.target.value);
+              if (selected) {
+                setForm({
+                  ...form,
+                  category_en: selected.en,
+                  category_bn: selected.bn,
+                });
+              }
+            }}
+            className="w-full border px-3 py-2 text-sm rounded-sm"
+          >
+            <option value="">Select category</option>
+            {categories.map((c) => (
+              <option key={c.en} value={c.en}>
+                {c.bn}
+              </option>
+            ))}
+          </select>
+
+          <Input
+            name="tags"
+            value={form.tags}
+            onChange={handleChange}
+            placeholder="Tags (comma separated)"
+          />
+        </div>
+      </div>
+
+      <Button onClick={handleUpdate} disabled={loading} className="w-full py-5">
+        {loading ? "Updating..." : "Update News"}
       </Button>
     </div>
   );

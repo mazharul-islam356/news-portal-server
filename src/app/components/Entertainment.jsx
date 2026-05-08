@@ -5,6 +5,7 @@ import { getTranslatedValue } from "@/hooks/getTranslatedValue";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/lagnguageContext";
+import Link from "next/link";
 
 export default function Entertainment() {
   const [entertainment, setEntertainment] = useState([]);
@@ -95,7 +96,7 @@ export default function Entertainment() {
           {/* BIG LEFT */}
           <div className="lg:col-span-3 bg-white p-5 rounded shadow-sm">
             {mainNews && (
-              <>
+              <Link href={`/news/${mainNews?._id || "#"}`}>
                 <h2 className="text-xl md:text-2xl font-semibold mb-3 text-ellipsis line-clamp-2 text-center md:text-left">
                   {getTranslatedValue(mainNews?.title, lang)}
                 </h2>
@@ -109,14 +110,15 @@ export default function Entertainment() {
                     alt={getTranslatedValue(mainNews?.title, lang)}
                   />
                 </div>
-              </>
+              </Link>
             )}
           </div>
 
           {/* RIGHT SIDE */}
           <div className="md:space-y-4 space-y-2">
             {sideNews.slice(0, 3).map((news, i) => (
-              <div
+              <Link
+                href={`/news/${news?._id || "#"}`}
                 key={i}
                 className="flex gap-3 bg-white p-3 rounded shadow-sm h-28"
               >
@@ -130,14 +132,18 @@ export default function Entertainment() {
                 <p className="text-sm text-ellipsis line-clamp-2">
                   {getTranslatedValue(news?.title, lang)}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
 
           {/* GRID BELOW */}
           <div className="lg:col-span-4  md:grid-cols-4 gap-5 mt-4 hidden md:grid">
             {gridNews.map((news, i) => (
-              <div key={i} className="bg-white p-3 rounded shadow-sm ">
+              <Link
+                href={`/news/${news?._id || "#"}`}
+                key={i}
+                className="bg-white p-3 rounded shadow-sm "
+              >
                 <Image
                   src={news?.featuredImage?.[0]}
                   width={300}
@@ -148,7 +154,7 @@ export default function Entertainment() {
                 <h4 className="text-sm text-ellipsis line-clamp-1 font-medium mt-3">
                   {getTranslatedValue(news?.title, lang)}
                 </h4>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

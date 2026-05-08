@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/lagnguageContext";
 import { getNewsByCategory } from "@/service/newsApi";
+import Link from "next/link";
 
 export default function NewsSection() {
   const [entertainment, setEntertainment] = useState([]);
@@ -77,7 +78,7 @@ export default function NewsSection() {
             {/* Category + Date */}
             <div className="mb-3">
               <p className="text-red-600 text-sm font-semibold">
-                {item?.category?.en || item?.category}
+                {item?.category[lang] || item?.category}
               </p>
 
               <p className="text-xs text-gray-500">
@@ -86,7 +87,10 @@ export default function NewsSection() {
             </div>
 
             {/* Image */}
-            <div className="overflow-hidden">
+            <Link
+              href={`/news/${item?._id || "#"}`}
+              className="overflow-hidden"
+            >
               <Image
                 src={item?.featuredImage[0]}
                 alt={item?.title}
@@ -94,14 +98,16 @@ export default function NewsSection() {
                 height={400}
                 className="w-full h-[260px] object-cover group-hover:scale-105 transition duration-300"
               />
-            </div>
+            </Link>
 
             {/* Title */}
-            <h2 className="mt-4 text-xl font-semibold leading-snug group-hover:text-red-600 transition">
-              {typeof item?.title === "object"
-                ? item?.title?.[lang]
-                : item?.title}
-            </h2>
+            <Link href={`/news/${item?._id || "#"}`}>
+              <h2 className="mt-4 text-xl font-semibold leading-snug group-hover:text-red-600 transition">
+                {typeof item?.title === "object"
+                  ? item?.title?.[lang]
+                  : item?.title}
+              </h2>
+            </Link>
           </div>
         ))}
       </div>
@@ -114,28 +120,28 @@ export default function NewsSection() {
         {smallNews.map((item, index) => (
           <div
             key={item?._id || index}
-            className="flex gap-4 items-start p-4 border-b lg:border-b-0 md:border-r group cursor-pointer"
+            className="flex gap-4 md:items-center p-4 border-b lg:border-b-0 md:border-r group cursor-pointer"
           >
             {/* Image */}
-            <Image
-              src={item?.featuredImage[0]}
-              alt={item?.title}
-              width={120}
-              height={100}
-              className="w-[110px] h-[90px] object-cover rounded-sm"
-            />
+            <Link href={`/news/${item?._id || "#"}`}>
+              <Image
+                src={item?.featuredImage[0]}
+                alt={item?.title}
+                width={120}
+                height={100}
+                className="w-[110px] h-[90px] object-cover rounded-sm"
+              />
+            </Link>
 
             {/* Content */}
             <div>
-              <p className="text-red-600 text-sm font-medium">
-                {item?.category?.en || item?.category}
-              </p>
-
-              <h3 className="text-base font-semibold leading-snug group-hover:text-red-600 transition">
-                {typeof item?.title === "object"
-                  ? item?.title?.[lang]
-                  : item?.title}
-              </h3>
+              <Link href={`/news/${item?._id || "#"}`}>
+                <h3 className="text-base font-semibold leading-snug group-hover:text-red-600 transition">
+                  {typeof item?.title === "object"
+                    ? item?.title?.[lang]
+                    : item?.title}
+                </h3>
+              </Link>
 
               <p className="text-xs text-gray-500 mt-1">
                 {new Date(item?.createdAt).toLocaleDateString()}

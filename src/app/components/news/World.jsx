@@ -98,9 +98,11 @@ export default function World() {
                 className="flex gap-3 sm:gap-4 border-b pb-3 sm:pb-4"
               >
                 <div className="flex-1">
-                  <h3 className="text-sm sm:text-base font-medium leading-snug line-clamp-2">
-                    {getTranslatedValue(news?.title, lang)}
-                  </h3>
+                  <Link href={`/news/${news?._id || "#"}`}>
+                    <h3 className="text-sm sm:text-base font-medium leading-snug line-clamp-2">
+                      {getTranslatedValue(news?.title, lang)}
+                    </h3>
+                  </Link>
 
                   <p className="text-[11px] sm:text-xs text-gray-500 mt-2">
                     {news?.createdAt ? "কিছু সময় আগে" : ""}
@@ -125,14 +127,16 @@ export default function World() {
             {featured && (
               <Link href={`/news/${featured?._id || "#"}`}>
                 <div className="relative w-full h-52 sm:h-64 md:h-72">
-                  <Image
-                    src={featured?.featuredImage?.[0] || "/placeholder.jpg"}
-                    fill
-                    alt={getTranslatedValue(featured?.title, lang)}
-                    className="rounded object-cover"
-                  />
+                  <Link href={`/news/${featured?._id || "#"}`}>
+                    <Image
+                      src={featured?.featuredImage?.[0] || "/placeholder.jpg"}
+                      fill
+                      alt={getTranslatedValue(featured?.title, lang)}
+                      className="rounded object-cover"
+                    />
+                  </Link>
 
-                  <div className="absolute top-3 left-3 bg-red-600 p-2 rounded-full text-white text-xs">
+                  <div className="absolute top-2.5 left-3 bg-red-600 p-2 rounded-full text-white text-xs">
                     📷
                   </div>
                 </div>
