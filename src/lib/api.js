@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://news-portal-server-ivory.vercel.app/api",
 });
 
 export const authHeader = {

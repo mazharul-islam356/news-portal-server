@@ -45,8 +45,10 @@ export default function NewsDetailsPage() {
         setLoading(true);
 
         const [newsRes, latestRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/news/${id}`),
-          axios.get(`http://localhost:5000/api/news`),
+          axios.get(
+            `https://news-portal-server-ivory.vercel.app/api/news/${id}`,
+          ),
+          axios.get(`https://news-portal-server-ivory.vercel.app/api/news`),
         ]);
 
         setNews(newsRes.data);
