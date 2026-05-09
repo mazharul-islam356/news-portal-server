@@ -133,7 +133,7 @@ export default function CreateNews() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
+    <div className="max-w-7xl mx-auto md:p-6 pt-10 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* LEFT */}
         <div className="md:col-span-3 space-y-5">
@@ -219,7 +219,7 @@ export default function CreateNews() {
           </div>
         </div>
       </div>
-      <div className="space-y-4 grid grid-cols-2 gap-x-4">
+      <div className="space-y-4 grid md:grid-cols-2 gap-x-4">
         <div className="border p-4 rounded-sm space-y-4">
           <h2 className="text-sm font-semibold">News Flags</h2>
 
@@ -410,7 +410,7 @@ export default function CreateNews() {
         </div>
         <div className="border p-4 space-y-3 rounded-sm">
           {/* writer name */}
-          <div className="flex items-center gap-2">
+          <div className="md:flex items-center gap-2 space-y-2 md:space-y-0">
             <Input
               name="writer_bn"
               value={form.writer_bn}

@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import Calendar from "react-calendar";
+import { toast } from "sonner";
 
 const StickyBottomNav = ({ categories }) => {
   const [open, setOpen] = useState(false);
@@ -55,7 +56,12 @@ const StickyBottomNav = ({ categories }) => {
 
         {/* Right Actions */}
         <div className="hidden lg:flex items-center  border-l border-gray-200">
-          <button className="px-6 py-5 border-r border-gray-200 hover:bg-gray-50">
+          <button
+            onClick={() => {
+              toast.warning("In development!");
+            }}
+            className="px-6 py-5 border-r border-gray-200 hover:bg-gray-50"
+          >
             <Search size={26} />
           </button>
 
@@ -108,7 +114,12 @@ const StickyBottomNav = ({ categories }) => {
             </span>
           </button>
 
-          <button className="px-6 py-5 border-r border-gray-200 flex items-center gap-2 hover:bg-gray-50">
+          <button
+            onClick={() => {
+              toast.warning("In development!");
+            }}
+            className="px-6 py-5 border-r border-gray-200 flex items-center gap-2 hover:bg-gray-50"
+          >
             <User size={22} />
             <span className="text-lg"> {l.title[lang]}</span>
           </button>
