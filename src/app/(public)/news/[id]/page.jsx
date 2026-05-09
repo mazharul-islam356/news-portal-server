@@ -65,15 +65,12 @@ export default function NewsDetailsPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-[70vh]">
-        <div className="flex space-x-1.5">
+        <div className="flex flex-col space-x-1.5">
+          <Image src="/newsportalLogo.png" alt="logo" width={90} height={90} />
           <span className="w-2.5 h-2.5 bg-red-700 rounded-full animate-bounce"></span>
           <span className="w-2.5 h-2.5 bg-red-700 rounded-full animate-bounce [animation-delay:0.1s]"></span>
           <span className="w-2.5 h-2.5 bg-red-700 rounded-full animate-bounce [animation-delay:0.2s]"></span>
         </div>
-
-        <p className="mt-3 text-sm text-gray-600 font-medium">
-          Loading News...
-        </p>
       </div>
     );
   }
@@ -100,21 +97,21 @@ export default function NewsDetailsPage() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => shareOnFacebook(fullUrl)}
-              className="p-2 rounded-full bg-[#1877F2] text-white hover:opacity-90"
+              className="p-2 rounded-full bg-[#1877F2] text-white hover:opacity-90 cursor-pointer"
             >
               <Facebook size={16} />
             </button>
 
             <button
               onClick={() => shareOnTwitter(fullUrl, news.title?.[lang])}
-              className="p-2 rounded-full bg-[#1DA1F2] text-white hover:opacity-90"
+              className="p-2 rounded-full bg-[#1DA1F2] text-white hover:opacity-90 cursor-pointer"
             >
               <Twitter size={16} />
             </button>
 
             <button
               onClick={() => copyLink(fullUrl)}
-              className="p-2 rounded-full bg-gray-800 text-white hover:opacity-80"
+              className="p-2 rounded-full bg-gray-800 text-white hover:opacity-80 cursor-pointer"
             >
               <LinkIcon size={16} />
             </button>
@@ -126,7 +123,7 @@ export default function NewsDetailsPage() {
                   url: fullUrl,
                 })
               }
-              className="p-2 rounded-full bg-green-600 text-white hover:opacity-90"
+              className="p-2 rounded-full bg-green-600 text-white hover:opacity-90 cursor-pointer"
             >
               <Share2 size={16} />
             </button>

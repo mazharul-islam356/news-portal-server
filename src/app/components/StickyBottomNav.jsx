@@ -191,9 +191,9 @@ const StickyBottomNav = ({ categories }) => {
           <div className="flex items-center gap-2">
             <button
               onClick={toggleLanguage}
-              className="border-r border-gray-200 flex items-center gap-1 mb-2 hover:bg-gray-50 cursor-pointer"
+              className="border-r border-gray-200 flex items-center gap-0.5 mb-2 hover:bg-gray-50 cursor-pointer"
             >
-              <Globe size={18} />
+              <Globe size={16} />
               <span className="text-sm">{lang === "en" ? "বাং" : "En"}</span>
             </button>
 
