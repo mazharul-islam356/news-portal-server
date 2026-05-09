@@ -22,9 +22,17 @@ const Buissness = () => {
   }, []);
 
   console.log("business news", business);
+
+  const t = {
+    title: {
+      en: "Business",
+      bn: "বাণিজ্য",
+    },
+  };
+
   return (
     <div>
-      <NewsSection title="বাণিজ্য" data={business} />
+      <NewsSection title={t} data={business} />
     </div>
   );
 };

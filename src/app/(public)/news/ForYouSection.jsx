@@ -68,16 +68,15 @@ export default function ForYouSection() {
               className="bg-white rounded-sm sm:rounded-md overflow-hidden shadow-sm hover:shadow-md transition"
             >
               {/* Image */}
-              <Link
-                href={`/news/${item?._id || "#"}`}
-                className="relative w-full h-40 sm:h-44 md:h-48"
-              >
-                <Image
-                  src={item?.featuredImage?.[0] || "/placeholder.jpg"}
-                  alt={item?.title?.[lang] || "news"}
-                  fill
-                  className="object-cover"
-                />
+              <Link href={`/news/${item?._id || "#"}`}>
+                <div className="relative w-full h-40 sm:h-44 md:h-48">
+                  <Image
+                    src={item?.featuredImage?.[0] || "/placeholder.jpg"}
+                    alt={item?.title?.[lang] || "news"}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </Link>
 
               {/* Content */}

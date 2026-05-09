@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 export const formatDateTime = (date, lang) => {
   const d = new Date(date);
 
@@ -41,7 +43,7 @@ export const shareOnTwitter = (url, text) => {
 export const copyLink = async (url) => {
   try {
     await navigator.clipboard.writeText(url);
-    alert("Link copied!");
+    toast.success("Link copied!");
   } catch (err) {
     console.error("Copy failed", err);
   }

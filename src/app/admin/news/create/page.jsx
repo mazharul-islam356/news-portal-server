@@ -126,7 +126,7 @@ export default function CreateNews() {
       setFiles([]);
       setPreviews([]);
     } catch (err) {
-      toast.error("Error creating news");
+      toast.error(err.message || "Error creating news");
     } finally {
       setLoading(false);
     }

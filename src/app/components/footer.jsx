@@ -165,7 +165,7 @@ export default function Footer() {
         {/* BOTTOM */}
         <div className="border-t mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-3">
           <p>
-            © {new Date().getFullYear()} NewsToday. {t.rights[lang]}
+            © {new Date().getFullYear()} Nirvoybarta. {t.rights[lang]}
           </p>
 
           <p>

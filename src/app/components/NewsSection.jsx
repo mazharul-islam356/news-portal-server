@@ -17,7 +17,7 @@ export default function NewsSection({ title, data = [] }) {
   console.log(firstNews);
   return (
     <section className="max-w-7xl mx-auto px-4 py-10">
-      <SectionHeader title={title} />
+      <SectionHeader title={title.title[lang]} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
         {/* ================= LEFT BIG CARD ================= */}

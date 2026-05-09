@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { getNewsByCategory } from "@/service/newsApi";
 import Image from "next/image";
+import { Eye } from "lucide-react";
 
 const categoriesList = [
   { name: { bn: "বাংলাদেশ", en: "Bangladesh" }, slug: "bangladesh" },
@@ -134,8 +135,6 @@ export default function NewsList() {
     <div className="p-6 bg-gray-50 min-h-screen">
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
-        <h1 className="text-xl font-bold">News Dashboard</h1>
-
         <div className="flex gap-3">
           <select
             className="border px-3 py-2 rounded text-sm bg-white"
@@ -150,13 +149,12 @@ export default function NewsList() {
               </option>
             ))}
           </select>
-
-          <Link href="/admin/news/create">
-            <button className="bg-red-700 text-white px-4 py-2 rounded">
-              + Add
-            </button>
-          </Link>
         </div>
+        <Link href="/admin/news/create">
+          <button className="bg-red-700 cursor-pointer text-white px-4 py-2 rounded">
+            + Add
+          </button>
+        </Link>
       </div>
 
       {/* TABLE */}
@@ -205,7 +203,7 @@ export default function NewsList() {
 
                   {/* CATEGORY (SAFE FIX) */}
                   <td className="p-3">
-                    <span className="px-2 py-1 text-xs rounded bg-red-50 text-red-700">
+                    <span className="px-2 py-1 text-xs rounded bg-teal-100 text-teal-700">
                       {typeof item.category === "object"
                         ? item.category.bn || item.category.en
                         : item.category}
@@ -222,6 +220,9 @@ export default function NewsList() {
                   {/* ACTIONS */}
                   <td className="p-3 text-right">
                     <div className="flex justify-end gap-2">
+                      <Link href={`/news/${item?._id || "#"}`}>
+                        <Eye size={20} />
+                      </Link>
                       <Link href={`/admin/news/${item._id}`}>
                         <button className="px-3 py-1 text-xs border rounded cursor-pointer">
                           Edit

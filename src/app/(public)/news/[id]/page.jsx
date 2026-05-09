@@ -45,10 +45,8 @@ export default function NewsDetailsPage() {
         setLoading(true);
 
         const [newsRes, latestRes] = await Promise.all([
-          axios.get(
-            `https://news-portal-server-ivory.vercel.app/api/news/${id}`,
-          ),
-          axios.get(`https://news-portal-server-ivory.vercel.app/api/news`),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/news/${id}`),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/news`),
         ]);
 
         setNews(newsRes.data);
@@ -73,7 +71,9 @@ export default function NewsDetailsPage() {
           <span className="w-2.5 h-2.5 bg-red-700 rounded-full animate-bounce [animation-delay:0.2s]"></span>
         </div>
 
-        <p className="mt-3 text-sm text-gray-600 font-medium">Loading...</p>
+        <p className="mt-3 text-sm text-gray-600 font-medium">
+          Loading News...
+        </p>
       </div>
     );
   }
@@ -139,7 +139,14 @@ export default function NewsDetailsPage() {
             <PenLine size={14} /> {news.writer?.[lang]}
           </span>
           <span>•</span>
-          <span>{formatDateTime(news.createdAt, lang)}</span>
+          <span>
+            {formatDateTime(
+              news.publishedAt !== null
+                ? news.publishedAt
+                : news.updatedAt || news.createdAt,
+              lang,
+            )}
+          </span>
         </div>
 
         {/* IMAGE */}
