@@ -4,6 +4,7 @@ import Image from "next/image";
 import SectionHeader from "./SectionHeader";
 import { useLanguage } from "@/context/lagnguageContext";
 import { getTranslatedValue } from "@/hooks/getTranslatedValue";
+import { newsUrl } from "@/utils/newsHelpers";
 import Link from "next/link";
 
 export default function NewsSection({ title, data = [] }) {
@@ -24,7 +25,7 @@ export default function NewsSection({ title, data = [] }) {
         <div className="lg:col-span-2">
           {firstNews && (
             <div>
-              <Link href={`/news/${firstNews?._id || "#"}`}>
+              <Link href={newsUrl(firstNews)}>
                 <div className="relative w-full h-[260px]">
                   <Image
                     src={firstNews?.featuredImage?.[0]}
@@ -34,7 +35,7 @@ export default function NewsSection({ title, data = [] }) {
                   />
                 </div>
               </Link>
-              <Link href={`/news/${firstNews?._id || "#"}`}>
+              <Link href={newsUrl(firstNews)}>
                 <h3 className="text-xl font-semibold mt-3 leading-snug">
                   {getTranslatedValue(firstNews?.title, lang)}
                 </h3>
@@ -61,7 +62,7 @@ export default function NewsSection({ title, data = [] }) {
               </div>
 
               <div>
-                <Link href={`/news/${item?._id || "#"}`}>
+                <Link href={newsUrl(item)}>
                   <h4 className="text-sm text-ellipsis line-clamp-2 font-medium leading-snug">
                     {getTranslatedValue(item?.content, lang)}
                   </h4>

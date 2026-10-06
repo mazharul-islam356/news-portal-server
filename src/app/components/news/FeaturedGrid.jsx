@@ -40,7 +40,7 @@ export default function FeaturedGrid() {
   }, []);
 
   // prottek category theke first news
-  const data = [entertainment[0], business[0], corruption[0], world[0]].filter(
+  const data = [entertainment[4], business[0], corruption[1], world[4]].filter(
     Boolean,
   );
 

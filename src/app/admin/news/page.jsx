@@ -14,6 +14,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { getNewsByCategory } from "@/service/newsApi";
+import { newsUrl } from "@/utils/newsHelpers";
 import Image from "next/image";
 import { Eye } from "lucide-react";
 
@@ -22,11 +23,11 @@ const categoriesList = [
   { name: { bn: "বিশ্ব", en: "World" }, slug: "world" },
   { name: { bn: "আন্তর্জাতিক", en: "International" }, slug: "international" },
   { name: { bn: "রাজনীতি", en: "Politics" }, slug: "politics" },
+  { name: { bn: "জাতীয়", en: "National" }, slug: "national" },
   { name: { bn: "দুর্নীতি", en: "Corruption" }, slug: "corruption" },
   { name: { bn: "মতামত", en: "Opinion" }, slug: "opinion" },
   { name: { bn: "বাণিজ্য", en: "Business" }, slug: "business" },
   { name: { bn: "অর্থনীতি", en: "Economy" }, slug: "economy" },
-  { name: { bn: "জাতীয়", en: "National" }, slug: "national" },
   { name: { bn: "প্রযুক্তি", en: "Technology" }, slug: "technology" },
   { name: { bn: "বিজ্ঞান", en: "Science" }, slug: "science" },
   { name: { bn: "খেলা", en: "Sports" }, slug: "sports" },
@@ -130,7 +131,7 @@ export default function NewsList() {
               <th className="p-3">Image</th>
               <th className="p-3">Title</th>
               <th className="p-3">Category</th>
-              <th className="p-3">Slug</th>
+              <th className="p-3">Views</th>
               <th className="p-3 text-right">Actions</th>
             </tr>
           </thead>
@@ -167,11 +168,11 @@ export default function NewsList() {
                     </span>
                   </td>
 
-                  <td className="p-3 text-xs text-gray-500">{item.slug}</td>
+                  <td className="p-3 text-sm text-gray-500">{item?.views}</td>
 
                   <td className="p-3 text-right">
                     <div className="flex justify-end gap-2">
-                      <Link href={`/news/${item?._id}`}>
+                      <Link href={newsUrl(item)}>
                         <Eye size={18} />
                       </Link>
 
@@ -250,7 +251,7 @@ export default function NewsList() {
               </div>
 
               <div className="flex justify-between mt-3">
-                <Link href={`/news/${item?._id}`}>
+                <Link href={newsUrl(item)}>
                   <button className="text-xs text-blue-600 flex items-center gap-1">
                     <Eye size={14} /> View
                   </button>

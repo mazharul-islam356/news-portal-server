@@ -3,6 +3,7 @@
 import { useLanguage } from "@/context/lagnguageContext";
 import { getTranslatedValue } from "@/hooks/getTranslatedValue";
 import { getLatestNews } from "@/service/newsApi";
+import { newsUrl } from "@/utils/newsHelpers";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -52,7 +53,7 @@ export default function LatestNews() {
             className="group bg-white rounded-xs md:rounded-md overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
           >
             {/* Image */}
-            <Link href={`/news/${item?._id || "#"}`}>
+            <Link href={newsUrl(item)}>
               <div className="relative w-full h-40 sm:h-44 md:h-48 overflow-hidden">
                 <Image
                   src={item?.featuredImage?.[0] || "/placeholder.jpg"}
@@ -69,7 +70,7 @@ export default function LatestNews() {
             {/* Content */}
             <div className="p-3 sm:p-4 flex flex-col gap-2">
               {/* Title */}
-              <Link href={`/news/${item?._id || "#"}`}>
+              <Link href={newsUrl(item)}>
                 <h3 className="font-semibold text-sm sm:text-[15px] leading-snug line-clamp-2 group-hover:text-red-700 transition">
                   {getTranslatedValue(item?.title, lang)}
                 </h3>
@@ -89,7 +90,7 @@ export default function LatestNews() {
 
                 <Link
                   className="hidden md:block"
-                  href={`/news/${item?._id || "#"}`}
+                  href={newsUrl(item)}
                 >
                   <span className="text-[11px] sm:text-sm underline hover:text-blue-500 transition">
                     {t.readMore[lang]}

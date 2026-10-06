@@ -16,12 +16,12 @@ export default function NewsNavbar() {
     { name: { bn: "আন্তর্জাতিক", en: "International" }, slug: "international" },
 
     { name: { bn: "রাজনীতি", en: "Politics" }, slug: "politics" },
+    { name: { bn: "জাতীয়", en: "National" }, slug: "national" },
     { name: { bn: "দুর্নীতি", en: "corruption" }, slug: "corruption" },
     { name: { bn: "মতামত", en: "Opinion" }, slug: "opinion" },
 
     { name: { bn: "বাণিজ্য", en: "Business" }, slug: "business" },
     { name: { bn: "অর্থনীতি", en: "Economy" }, slug: "economy" },
-    { name: { bn: "জাতীয়", en: "National" }, slug: "national" },
 
     { name: { bn: "প্রযুক্তি", en: "Technology" }, slug: "technology" },
     { name: { bn: "বিজ্ঞান", en: "Science" }, slug: "science" },

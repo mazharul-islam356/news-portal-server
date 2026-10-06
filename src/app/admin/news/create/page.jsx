@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
 import Image from "next/image";
+import {
+  currentDateTimeInput,
+  toISOStringSafe,
+} from "@/utils/newsHelpers";
 
 const initialState = {
   title_bn: "",
@@ -39,8 +43,8 @@ const categories = [
   { bn: "আন্তর্জাতিক", en: "International" },
 
   { bn: "রাজনীতি", en: "Politics" },
-  { bn: "মতামত", en: "Opinion" },
   { bn: "জাতীয়", en: "National" },
+  { bn: "মতামত", en: "Opinion" },
 
   { bn: "বাণিজ্য", en: "Business" },
   { bn: "অর্থনীতি", en: "Economy" },
@@ -68,7 +72,10 @@ const categories = [
 ];
 
 export default function CreateNews() {
-  const [form, setForm] = useState(initialState);
+  const [form, setForm] = useState(() => ({
+    ...initialState,
+    publishedAt: currentDateTimeInput(),
+  }));
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -105,6 +112,11 @@ export default function CreateNews() {
       const data = new FormData();
 
       Object.entries(form).forEach(([key, value]) => {
+        if (key === "publishedAt") {
+          const iso = toISOStringSafe(value);
+          if (iso) data.append(key, iso);
+          return;
+        }
         data.append(key, value);
       });
 
@@ -122,7 +134,7 @@ export default function CreateNews() {
 
       toast.success("News created");
 
-      setForm(initialState);
+      setForm({ ...initialState, publishedAt: currentDateTimeInput() });
       setFiles([]);
       setPreviews([]);
     } catch (err) {
@@ -447,15 +459,15 @@ export default function CreateNews() {
 
           {/* CATEGORY */}
           <select
-            name="category"
-            value={form.category}
+            name="category_en"
+            value={form.category_en}
             onChange={(e) => {
               const selected = categories.find((c) => c.en === e.target.value);
 
               setForm({
                 ...form,
-                category_en: selected.en,
-                category_bn: selected.bn,
+                category_en: selected ? selected.en : "",
+                category_bn: selected ? selected.bn : "",
               });
             }}
             className="w-full border px-3 py-2 text-sm rounded-sm"

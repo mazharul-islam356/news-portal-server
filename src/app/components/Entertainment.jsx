@@ -2,6 +2,7 @@
 
 import { getNewsByCategory } from "@/service/newsApi";
 import { getTranslatedValue } from "@/hooks/getTranslatedValue";
+import { newsUrl } from "@/utils/newsHelpers";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/lagnguageContext";
@@ -96,7 +97,7 @@ export default function Entertainment() {
           {/* BIG LEFT */}
           <div className="lg:col-span-3 bg-white p-5 rounded shadow-sm">
             {mainNews && (
-              <Link href={`/news/${mainNews?._id || "#"}`}>
+              <Link href={newsUrl(mainNews)}>
                 <h2 className="text-xl md:text-2xl font-semibold mb-3 text-ellipsis line-clamp-2 text-center md:text-left">
                   {getTranslatedValue(mainNews?.title, lang)}
                 </h2>
@@ -104,8 +105,8 @@ export default function Entertainment() {
                 <div className="w-full h-40 md:h-72">
                   <Image
                     src={mainNews?.featuredImage?.[0]}
-                    width={400}
-                    height={300}
+                    width={1000}
+                    height={800}
                     className="rounded w-full h-full object-cover"
                     alt={getTranslatedValue(mainNews?.title, lang)}
                   />
@@ -118,7 +119,7 @@ export default function Entertainment() {
           <div className="md:space-y-4 space-y-2">
             {sideNews.slice(0, 3).map((news, i) => (
               <Link
-                href={`/news/${news?._id || "#"}`}
+                href={newsUrl(news)}
                 key={i}
                 className="flex gap-3 bg-white p-3 rounded shadow-sm h-28"
               >
@@ -140,7 +141,7 @@ export default function Entertainment() {
           <div className="lg:col-span-4  md:grid-cols-4 gap-5 mt-4 hidden md:grid">
             {gridNews.map((news, i) => (
               <Link
-                href={`/news/${news?._id || "#"}`}
+                href={newsUrl(news)}
                 key={i}
                 className="bg-white p-3 rounded shadow-sm "
               >

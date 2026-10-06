@@ -10,14 +10,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Image from "next/image";
+import {
+  toLocalDateTimeInput,
+  toISOStringSafe,
+} from "@/utils/newsHelpers";
 
 const categories = [
   { bn: "বাংলাদেশ", en: "Bangladesh" },
   { bn: "বিশ্ব", en: "World" },
   { bn: "আন্তর্জাতিক", en: "International" },
   { bn: "রাজনীতি", en: "Politics" },
-  { bn: "মতামত", en: "Opinion" },
   { bn: "জাতীয়", en: "National" },
+  { bn: "মতামত", en: "Opinion" },
   { bn: "বাণিজ্য", en: "Business" },
   { bn: "অর্থনীতি", en: "Economy" },
   { bn: "প্রযুক্তি", en: "Technology" },
@@ -98,7 +102,7 @@ export default function EditNews() {
           writer_bn: data.writer?.bn || "",
           writer_en: data.writer?.en || "",
           publishedAt: data.publishedAt
-            ? new Date(data.publishedAt).toISOString().slice(0, 16)
+            ? toLocalDateTimeInput(data.publishedAt)
             : "",
           status: data.status || "draft",
           tags: data.tags?.join(", ") || "",
@@ -158,9 +162,12 @@ export default function EditNews() {
       const data = new FormData();
 
       Object.entries(form).forEach(([key, value]) => {
-        if (value !== null && value !== undefined && value !== "") {
-          data.append(key, value);
+        if (key === "publishedAt") {
+          const iso = toISOStringSafe(value);
+          if (iso) data.append(key, iso);
+          return;
         }
+        data.append(key, value);
       });
 
       // Append existing images to keep them

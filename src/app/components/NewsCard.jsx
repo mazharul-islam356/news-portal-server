@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { newsUrl } from "@/utils/newsHelpers";
 
 export default function NewsCard({ item }) {
   return (
-    <Link href={`/news/${item.slug}`}>
+    <Link href={newsUrl(item)}>
       <div className="group cursor-pointer">
         <img
           src={item.featuredImage}

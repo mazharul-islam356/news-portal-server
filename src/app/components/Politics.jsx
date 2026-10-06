@@ -3,6 +3,7 @@
 import { useLanguage } from "@/context/lagnguageContext";
 import { getTranslatedValue } from "@/hooks/getTranslatedValue";
 import { getNewsByCategory } from "@/service/newsApi";
+import { newsDisplayDate, newsUrl } from "@/utils/newsHelpers";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -95,7 +96,7 @@ export default function PoliticsPage() {
         <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {firstTwo.map((news, i) => (
             <div key={i} className="bg-white rounded-sm overflow-hidden group">
-              <Link href={`/news/${news?._id || "#"}`}>
+              <Link href={newsUrl(news)}>
                 <div className="relative w-full h-48 sm:h-56">
                   <Image
                     src={news?.featuredImage?.[0] || "/placeholder.jpg"}
@@ -107,7 +108,7 @@ export default function PoliticsPage() {
               </Link>
 
               <div className="pt-3">
-                <Link href={`/news/${news?._id || "#"}`}>
+                <Link href={newsUrl(news)}>
                   <h3 className="text-base sm:text-xl font-semibold line-clamp-2">
                     {getTranslatedValue(news?.title, lang)}
                   </h3>
@@ -125,7 +126,7 @@ export default function PoliticsPage() {
         <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
           {lastFour.map((news, i) => (
             <Link
-              href={`/news/${news?._id || "#"}`}
+              href={newsUrl(news)}
               key={i}
               className="bg-white rounded-sm overflow-hidden hover:shadow-md transition"
             >
@@ -144,7 +145,7 @@ export default function PoliticsPage() {
                 </h4>
 
                 <p className="text-[10px] sm:text-xs mt-1 text-gray-500">
-                  ১৩ মিনিট আগে
+                  {new Date(newsDisplayDate(news)).toLocaleDateString()}
                 </p>
               </div>
             </Link>

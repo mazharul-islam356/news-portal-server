@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/lagnguageContext";
 import { getNewsByCategory } from "@/service/newsApi";
+import { newsDisplayDate, newsUrl } from "@/utils/newsHelpers";
 import Link from "next/link";
 
 export default function NewsSection() {
@@ -46,13 +47,13 @@ export default function NewsSection() {
 
   // ===== TOP BIG CARD =====
   // sob category er 0 index data
-  const largeNews = [entertainment[0], corruption[0], national[0]].filter(
+  const largeNews = [entertainment[3], corruption[1], national[0]].filter(
     Boolean,
   );
 
   // ===== BOTTOM SMALL CARD =====
   // sob category er 1 index data
-  const smallNews = [entertainment[1], corruption[1], national[1]].filter(
+  const smallNews = [entertainment[1], corruption[0], national[1]].filter(
     Boolean,
   );
 
@@ -82,13 +83,13 @@ export default function NewsSection() {
               </p>
 
               <p className="text-xs text-gray-500">
-                {new Date(item?.createdAt).toLocaleDateString()}
+                {new Date(newsDisplayDate(item)).toLocaleDateString()}
               </p>
             </div>
 
             {/* Image */}
             <Link
-              href={`/news/${item?._id || "#"}`}
+              href={newsUrl(item)}
               className="overflow-hidden"
             >
               <Image
@@ -101,7 +102,7 @@ export default function NewsSection() {
             </Link>
 
             {/* Title */}
-            <Link href={`/news/${item?._id || "#"}`}>
+            <Link href={newsUrl(item)}>
               <h2 className="mt-4 text-xl font-semibold leading-snug group-hover:text-red-600 transition">
                 {typeof item?.title === "object"
                   ? item?.title?.[lang]
@@ -123,7 +124,7 @@ export default function NewsSection() {
             className="flex gap-4 md:items-center p-4 border-b lg:border-b-0 md:border-r group cursor-pointer"
           >
             {/* Image */}
-            <Link href={`/news/${item?._id || "#"}`}>
+            <Link href={newsUrl(item)}>
               <Image
                 src={item?.featuredImage[0]}
                 alt={item?.title}
@@ -135,7 +136,7 @@ export default function NewsSection() {
 
             {/* Content */}
             <div>
-              <Link href={`/news/${item?._id || "#"}`}>
+              <Link href={newsUrl(item)}>
                 <h3 className="text-base font-semibold leading-snug group-hover:text-red-600 transition">
                   {typeof item?.title === "object"
                     ? item?.title?.[lang]
@@ -144,7 +145,7 @@ export default function NewsSection() {
               </Link>
 
               <p className="text-xs text-gray-500 mt-1">
-                {new Date(item?.createdAt).toLocaleDateString()}
+                {new Date(newsDisplayDate(item)).toLocaleDateString()}
               </p>
             </div>
           </div>

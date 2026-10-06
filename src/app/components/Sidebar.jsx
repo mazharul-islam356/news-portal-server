@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { newsUrl } from "@/utils/newsHelpers";
 
 export default function Sidebar({ trending }) {
   return (
@@ -10,7 +11,7 @@ export default function Sidebar({ trending }) {
 
         <div className="space-y-3">
           {trending.map((item, i) => (
-            <Link key={item._id} href={`/news/${item.slug}`}>
+            <Link key={item._id} href={newsUrl(item)}>
               <div className="flex gap-3 items-start">
                 <span className="text-xl font-bold text-gray-400">{i + 1}</span>
                 <p className="text-sm hover:text-blue-600">{item.title_bn}</p>

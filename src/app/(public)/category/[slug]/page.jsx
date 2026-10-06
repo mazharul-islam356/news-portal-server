@@ -8,6 +8,7 @@ import AdBanner from "@/app/components/AdBanner";
 import ForYouSection from "../../news/ForYouSection";
 import { getNewsByCategory } from "@/service/newsApi";
 import { useLanguage } from "@/context/lagnguageContext";
+import { newsUrl } from "@/utils/newsHelpers";
 import { useParams } from "next/navigation";
 import { Calendar, PenLine } from "lucide-react";
 
@@ -50,7 +51,7 @@ export default function NewsPage() {
         <div className="lg:col-span-2 space-y-8">
           {/* TOP NEWS */}
           {news[0] && (
-            <Link href={`/news/${news[0]._id}`}>
+            <Link href={newsUrl(news[0])}>
               <div className="group cursor-pointer">
                 <div className="relative w-full h-[400px]">
                   <Image
@@ -91,7 +92,7 @@ export default function NewsPage() {
           {/* NEWS LIST */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {news.slice(1, 7).map((item) => (
-              <Link href={`/news/${item._id}`} key={item._id}>
+              <Link href={newsUrl(item)} key={item._id}>
                 <div className="group cursor-pointer border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition duration-300 bg-white h-full flex flex-col">
                   {/* IMAGE */}
                   <div className="relative w-full h-44 overflow-hidden">
@@ -154,7 +155,7 @@ export default function NewsPage() {
 
             <div className="space-y-4">
               {news.slice(6, 11).map((item, index) => (
-                <Link href={`/news/${item._id}`} key={item._id}>
+                <Link href={newsUrl(item)} key={item._id}>
                   <div className="flex gap-3 group">
                     <span className="text-2xl font-bold text-red-500">
                       {index + 1}
@@ -178,7 +179,7 @@ export default function NewsPage() {
           {/* SMALL GRID */}
           <div className="grid grid-cols-2 gap-4">
             {news.slice(11, 15).map((item) => (
-              <Link href={`/news/${item._id}`} key={item._id}>
+              <Link href={newsUrl(item)} key={item._id}>
                 <div className="group">
                   <div className="relative w-full h-28">
                     <Image

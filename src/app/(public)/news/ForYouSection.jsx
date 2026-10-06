@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getNewsByCategory } from "@/service/newsApi";
 import { useLanguage } from "@/context/lagnguageContext";
+import { newsUrl } from "@/utils/newsHelpers";
 import Link from "next/link";
 
 export default function ForYouSection() {
@@ -68,7 +69,7 @@ export default function ForYouSection() {
               className="bg-white rounded-sm sm:rounded-md overflow-hidden shadow-sm hover:shadow-md transition"
             >
               {/* Image */}
-              <Link href={`/news/${item?._id || "#"}`}>
+              <Link href={newsUrl(item)}>
                 <div className="relative w-full h-40 sm:h-44 md:h-48">
                   <Image
                     src={item?.featuredImage?.[0] || "/placeholder.jpg"}
@@ -82,7 +83,7 @@ export default function ForYouSection() {
               {/* Content */}
               <div className="p-3 sm:p-4">
                 {/* Title */}
-                <Link href={`/news/${item?._id || "#"}`}>
+                <Link href={newsUrl(item)}>
                   <h3 className="text-sm sm:text-base font-semibold mb-2 leading-snug line-clamp-2">
                     {item?.title?.[lang]}
                   </h3>

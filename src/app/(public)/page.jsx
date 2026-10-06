@@ -5,6 +5,7 @@ import { api } from "@/lib/api";
 import BreakingTicker from "../components/news/BreakingTicker";
 import HeroSection from "../components/HeroBanner";
 import PoliticsPage from "../components/Politics";
+import JatiyoPage from "../components/Jatiyo";
 
 import National from "../components/National";
 
@@ -113,6 +114,7 @@ export default function HomePage() {
       <LatestNews />
       <Buissness />
       <PoliticsPage />
+      <JatiyoPage />
       <AdBanner2 imageUrl="/larevad.jpg" />
       <World />
       <Entertainment />

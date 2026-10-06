@@ -1,6 +1,7 @@
 "use client";
 
 import { getBreakingNews, getFeaturedNews } from "@/service/newsApi";
+import { newsUrl } from "@/utils/newsHelpers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -62,7 +63,7 @@ export default function HeroSection() {
           pagination={{ clickable: true }}
           className="md:rounded-md overflow-hidden"
         >
-          {featured.map((item, index) => (
+          {featured.slice(0, 3).map((item, index) => (
             <SwiperSlide key={index}>
               <div className="relative">
                 <Image
@@ -82,7 +83,7 @@ export default function HeroSection() {
                     {getTranslatedValue(item.title, lang)}
                   </h1>
 
-                  <Link href={`/news/${item._id}`}>
+                  <Link href={newsUrl(item)}>
                     <span className="inline-block my-3 text-sm underline hover:text-blue-300 transition">
                       {t.readMore[lang]}
                     </span>
@@ -97,7 +98,7 @@ export default function HeroSection() {
       {/* RIGHT: Trending */}
       <div className="flex flex-col md:gap-2 gap-0">
         {breaking?.slice(0, 4).map((item) => (
-          <Link key={item?._id} href={`/news/${item._id}`}>
+          <Link key={item?._id} href={newsUrl(item)}>
             <div className="flex gap-3 group cursor-pointer bg-white border border-gray-100 md:rounded-lg rounded-xs p-2 hover:shadow-md transition">
               <Image
                 width={500}
