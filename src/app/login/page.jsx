@@ -61,7 +61,7 @@ export default function AdminLogin() {
                 placeholder="Enter phone number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-red-500 transition"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20  placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-red-500 transition"
               />
             </div>
 
@@ -75,7 +75,7 @@ export default function AdminLogin() {
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-red-500 transition"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-red-500 transition"
               />
             </div>
 

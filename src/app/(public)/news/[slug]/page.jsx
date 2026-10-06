@@ -19,6 +19,7 @@ import {
   shareOnTwitter,
   copyLink,
   newsUrl,
+  findNewsBySlug,
 } from "@/utils/newsHelpers";
 
 import Image from "next/image";
@@ -46,12 +47,22 @@ export default function NewsDetailsPage() {
       try {
         setLoading(true);
 
+        // Direct slug fetch. Older API versions don't support slug lookup and
+        // respond with an error, so we degrade gracefully to list matching.
         const [newsRes, latestRes] = await Promise.all([
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/news/${slug}`),
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/news`),
+          axios
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/news/${slug}`)
+            .catch(() => null),
+          axios
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/news`)
+            .catch(() => ({ data: [] })),
         ]);
 
-        const data = newsRes.data;
+        let data = newsRes?.data || null;
+
+        if (!data) {
+          data = findNewsBySlug(latestRes.data || [], slug) || null;
+        }
 
         // Backward compatibility: an old /news/{id} URL (or a changed slug)
         // permanently moves to the canonical slug URL.
